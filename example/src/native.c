@@ -4,7 +4,7 @@
 #include <string.h>
 
 /// hello world
-char* hello(const char* text)
+EXPORT char* hello(const char* text)
 {
     char* buffer = (char*)malloc(strlen(text) + 8);
     sprintf(buffer, "Hello %s!", text);
@@ -12,7 +12,7 @@ char* hello(const char* text)
 }
 
 /// freeMemory
-void freeMemory(char* buffer)
+EXPORT void freeMemory(char* buffer)
 {
     if (buffer) {
         free(buffer);
@@ -20,19 +20,19 @@ void freeMemory(char* buffer)
 }
 
 /// size of an int
-int intSize()
+EXPORT int intSize()
 {
     return (int)sizeof(int);
 }
 
 /// size of a bool
-int boolSize()
+EXPORT int boolSize()
 {
     return (int)sizeof(_Bool);
 }
 
 /// size of a pointer
-int pointerSize()
+EXPORT int pointerSize()
 {
     return (int)sizeof(void*);
 }

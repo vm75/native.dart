@@ -9,7 +9,7 @@ import 'marshaller.dart';
 import 'memory.dart';
 import 'null_memory.dart';
 import 'type_utils.dart';
-export 'marshaller.dart' show sizeOf, initTypes;
+export 'marshaller.dart' show initTypes, sizeOf;
 
 /// Represents a pointer into the native C memory corresponding to "NULL",
 /// e.g. a pointer with address 0.
@@ -208,8 +208,8 @@ class Pointer<T extends NativeType> extends NativeType {
       [Object? exceptionalReturn,
       Memory? bindToMemory,
       WasmTable? bindToTable]) {
-    Memory? memory = bindToMemory ?? Memory.global;
-    WasmTable? table = bindToTable ?? WasmTable.global;
+    final Memory? memory = bindToMemory ?? Memory.global;
+    final WasmTable? table = bindToTable ?? WasmTable.global;
     return pointerFromFunctionImpl(f, table!, memory!);
   }
 
@@ -237,7 +237,7 @@ class Pointer<T extends NativeType> extends NativeType {
   /// The optional parameter `bindTo` can be ommited, if and only if
   /// [Memory.global] is set, which is then used as `Memory` to bind to.
   factory Pointer.fromAddress(int ptr, [Memory? bindTo]) {
-    Memory? memory = bindTo ?? Memory.global;
+    final Memory? memory = bindTo ?? Memory.global;
     if (memory == null) {
       throw StateError(
           'No global memory set and no explcity memory to bind to given!');
@@ -256,7 +256,7 @@ class Pointer<T extends NativeType> extends NativeType {
   /// Throws an [UnsupportedError] if called on a pointer with an @[unsized]
   /// type argument.
   Pointer<T> elementAt(int index) {
-    int? s = size;
+    final int? s = size;
     if (s != null) {
       return Pointer<T>._(address + index * s, boundMemory, s);
     } else {
@@ -283,7 +283,7 @@ class Pointer<T extends NativeType> extends NativeType {
   /// type argument.
   @extra
   ByteData viewSingle(int index) {
-    int? s = size;
+    final int? s = size;
     if (s != null) {
       return boundMemory.buffer.asByteData(address + index * s, s);
     } else {
@@ -371,10 +371,10 @@ void initSignatures([int pointerSizeBytes = 4]) {
 }
 
 String _getWasmSignature<T extends Function>() {
-  List<String> dartSignature = typeString<T>().split('=>');
-  String retType = dartSignature.last.trim();
-  String argTypes = dartSignature.first.trim();
-  List<String> argTypesList =
+  final List<String> dartSignature = typeString<T>().split('=>');
+  final String retType = dartSignature.last.trim();
+  final String argTypes = dartSignature.first.trim();
+  final List<String> argTypesList =
       argTypes.substring(1, argTypes.length - 1).split(', ');
 
   developer.log('types: $retType $argTypesList');
@@ -406,27 +406,31 @@ extension ListExtension<T> on List<T> {
 }
 
 Pointer<NativeFunction<T>> pointerFromFunctionImpl<T extends Function>(
-    @DartRepresentationOf('T') Function func, WasmTable table, Memory memory) {
+    /* TODO: @DartRepresentationOf('T')  */
+    Function func,
+    WasmTable table,
+    Memory memory) {
   // TODO: garbage collect
 
   return exportedFunctions.putIfAbsent(func, () {
     developer.log('marshal from: ${func.runtimeType} to $T');
-    String dartSignature = func.runtimeType.toString();
-    String argTypes = dartSignature.split('=>').first.trim();
-    List<String> argT = argTypes.substring(1, argTypes.length - 1).split(', ');
+    final String dartSignature = func.runtimeType.toString();
+    final String argTypes = dartSignature.split('=>').first.trim();
+    final List<String> argT =
+        argTypes.substring(1, argTypes.length - 1).split(', ');
     developer.log('arg types: $argT');
-    List<Function> marshallers = argTypes
+    final List<Function> marshallers = argTypes
         .substring(1, argTypes.length - 1)
         .split(', ')
         .map((arg) => marshaller(arg))
         .toList();
 
-    String wasmSignature = _getWasmSignature<T>();
+    final String wasmSignature = _getWasmSignature<T>();
 
     developer.log('wasm sig: $wasmSignature');
 
     // ignore: prefer_function_declarations_over_variables
-    Function wrapper1 = (List args) {
+    final Function wrapper1 = (List args) {
       developer.log('wrapper of $T called with $args');
       final marshalledArgs =
           marshallers.mapIndexed((i, m) => m(args[i], memory)).toList();
@@ -434,7 +438,7 @@ Pointer<NativeFunction<T>> pointerFromFunctionImpl<T extends Function>(
       Function.apply(func, marshalledArgs);
       developer.log('done!');
     };
-    Function wrapper2 = callbackHelpers[argT.length](wrapper1);
+    final Function wrapper2 = callbackHelpers[argT.length](wrapper1);
 
     // theFunctions.add(wrapper);
 

@@ -1,29 +1,29 @@
 #ifndef __NATIVE_H
 #define __NATIVE_H
 
-#ifdef _WIN32
-#ifdef NATIVE_EXPORTS
-#define NATIVE_API __declspec(dllexport)
+#if defined(__EMSCRIPTEN__)
+// In the case of Emscripten, we need to use EMSCRIPTEN_KEEPALIVE
+#include <emscripten.h>
+#define EXPORT EMSCRIPTEN_KEEPALIVE
+#elif defined(_MSC_VER)
+#define EXPORT __declspec(dllexport)
 #else
-#define NATIVE_API __declspec(dllimport)
-#endif
-#else
-#define NATIVE_API
+#define EXPORT __attribute__((visibility("default"))) __attribute__((used))
 #endif
 
 /// hello world
-NATIVE_API char* hello(const char* text);
+EXPORT char* hello(const char* text);
 
 /// free up the memory allocated by the library
-NATIVE_API void freeMemory(char* buffer);
+EXPORT void freeMemory(char* buffer);
 
 /// size of an int
-NATIVE_API int intSize();
+EXPORT int intSize();
 
 /// size of a bool
-NATIVE_API int boolSize();
+EXPORT int boolSize();
 
 /// size of a pointer
-NATIVE_API int pointerSize();
+EXPORT int pointerSize();
 
 #endif

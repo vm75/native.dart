@@ -17,6 +17,7 @@ extension NativeFunctionPointer<NF extends Function>
   /// If this is called on a pointer that does not point to a function,
   /// a [ArgumentError](https://api.dart.dev/stable/dart-core/ArgumentError-class.html) is thrown.
   DF asFunction<DF extends Function>() {
+    // ignore: prefer_final_locals
     WasmSymbol symbol = symbolByAddress(boundMemory, address);
     if (symbol is FunctionDescription && symbol.function is Function) {
       return marshall<NF, DF>(symbol.function as Function, boundMemory);

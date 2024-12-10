@@ -1,7 +1,7 @@
 # Run with `dart run ffigen --config ffigen.yaml`.
-name: WasmBindings
+name: WasmFfiBindings
 description: Bindings for Wasm.
-output: "lib/wasm_bindings.dart"
+output: "lib/wasmffi_bindings.dart"
 headers:
   entry-points:
     - "src/native.h"

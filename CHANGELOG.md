@@ -1,3 +1,6 @@
+## [1.1.0]
+* Fixed standalone & emscripten wasm examples, flutter example.
+
 ## [1.0.2]
 * Changed library names
 

@@ -56,17 +56,8 @@ class Version {
   final int _minor;
   final int _patch;
   final String? _buildNumber;
-  static final defaultVersion = Version(0, 0, 1);
 
   Version(this._major, this._minor, this._patch, [this._buildNumber]);
-
-  static bool isValid(String? versionStr) {
-    if (versionStr == null || versionStr.isEmpty) {
-      return false;
-    }
-    final RegExp pattern = RegExp(r'^(?:(\d+)\.(\d+)\.(\d+)(?:\+(.+))?)$');
-    return pattern.hasMatch(versionStr);
-  }
 
   static Version? fromString(String? versionStr, [String? buildNumber]) {
     final RegExp pattern = RegExp(r'^(?:(\d+)\.(\d+)\.(\d+)(?:\+(.+))?)$');
@@ -339,7 +330,7 @@ void main(List<String> args) {
 
     // Get next version
     if (bumpType == null) {
-      stdout.write('Enter version next to "${helper.currentVersion()})": ');
+      stdout.write('Enter version next to "${helper.currentVersion()}": ');
       final versionStr = stdin.readLineSync(encoding: utf8);
       if (versionStr == null || versionStr.isEmpty) {
         throw Exception('No version provided');

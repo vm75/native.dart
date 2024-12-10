@@ -56,7 +56,7 @@ class Memory implements Allocator {
 Memory createMemory(Module module) => Memory._(module);
 
 WasmSymbol symbolByAddress(Memory m, int address) {
-  WasmSymbol? s = m._symbolsByAddress[address];
+  final WasmSymbol? s = m._symbolsByAddress[address];
   if (s != null) {
     return s;
   } else {
@@ -65,7 +65,7 @@ WasmSymbol symbolByAddress(Memory m, int address) {
 }
 
 WasmSymbol symbolByName(Memory m, String name) {
-  WasmSymbol? s = m._symbolsByName[name];
+  final WasmSymbol? s = m._symbolsByName[name];
   if (s != null) {
     return s;
   } else {

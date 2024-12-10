@@ -15,6 +15,7 @@ import 'types.dart';
 
 /// An interface for loading module binary.
 mixin ModuleLoader {
+  Future<bool> exists(String modulePath);
   Future<Uint8List> load(String modulePath);
 }
 
@@ -35,6 +36,17 @@ enum WasmType {
 enum GlobalMemory { yes, no, ifNotSet }
 
 class WebModuleLoader implements ModuleLoader {
+  @override
+  Future<bool> exists(String modulePath) async {
+    try {
+      final response = await http.head(Uri.parse(modulePath));
+      // Check if the response status code indicates success (2xx)
+      return response.statusCode >= 200 && response.statusCode < 300;
+    } catch (e) {
+      return false;
+    }
+  }
+
   @override
   Future<Uint8List> load(String modulePath) async {
     final response = await http.get(Uri.parse(modulePath));
@@ -104,7 +116,7 @@ class DynamicLibrary {
     moduleLoader ??= WebModuleLoader();
 
     /// Initialize the native types in marshaller
-    initTypes(4);
+    initTypes();
     registerOpaqueType<Utf8>(1);
     registerOpaqueType<Utf16>(2);
 
@@ -113,12 +125,20 @@ class DynamicLibrary {
     moduleName ??= path.basenameWithoutExtension(uri.pathSegments.last);
     if (wasmType == null) {
       final ext = path.extension(uri.pathSegments.last);
-      if (ext == '.wasm') {
-        wasmType = WasmType.wasm32Standalone;
-      } else if (ext == '.js') {
+      if (ext == '.js') {
         wasmType = WasmType.wasm32Emscripten;
+      } else if (ext == '.wasm') {
+        wasmType = WasmType.wasm32Standalone;
       } else {
-        throw Exception('Unsupported wasm type: $ext');
+        if (await moduleLoader.exists('$modulePath.js')) {
+          modulePath = '$modulePath.js';
+          wasmType = WasmType.wasm32Emscripten;
+        } else if (await moduleLoader.exists('$modulePath.wasm')) {
+          modulePath = '$modulePath.wasm';
+          wasmType = WasmType.wasm32Standalone;
+        } else {
+          throw ArgumentError('No wasm or js file found at $modulePath');
+        }
       }
     }
 
@@ -131,7 +151,7 @@ class DynamicLibrary {
       module = await StandaloneWasmModule.compile(wasmBinary);
     }
 
-    Memory memory = createMemory(module);
+    final Memory memory = createMemory(module);
 
     switch (useAsGlobal ?? GlobalMemory.ifNotSet) {
       case GlobalMemory.yes:
@@ -148,6 +168,18 @@ class DynamicLibrary {
 
     return DynamicLibrary._(module, memory);
   }
+
+  /// Emtpy stub for [DynamicLibrary.process]
+  ///
+  /// This is not possible since explicit module is required
+  @different
+  static DynamicLibrary process() => throw UnimplementedError();
+
+  /// Emtpy stub for [DynamicLibrary.executable]
+  ///
+  /// This is not possible since explicit module is required
+  @different
+  static DynamicLibrary executable() => throw UnimplementedError();
 
   /// Looks up a symbol in the DynamicLibrary and returns its address in memory.
   ///

@@ -83,7 +83,10 @@ T execute<T>(Function base, List<Object> args, Memory memory) {
     Function.apply(base, args.map(_toJsType).toList());
     return null as T;
   } else {
-    Object result = Function.apply(base, args.map(_toJsType).toList());
+    final Object? result = Function.apply(base, args.map(_toJsType).toList());
+    if (result == null) {
+      return null as T;
+    }
     return _toDartType<T>(result, memory);
   }
 }
@@ -105,13 +108,13 @@ Object _toJsType(Object dartObject) {
 }
 
 InvokeHelper _inferFromSignature(String signature) {
-  String returnType = signature.split('=>').last.trim();
+  final String returnType = signature.split('=>').last.trim();
   if (returnType.startsWith(pointerPointerPointerPrefix)) {
     throw const MarshallingException(
         'Nesting pointers is only supported to a deepth of 2!'
         '\nThis means that you can write Pointer<Pointer<X>> but not Pointer<Pointer<Pointer<X>>>, ...');
   }
-  InvokeHelper? h = _knownTypes[returnType];
+  final InvokeHelper? h = _knownTypes[returnType];
   if (h != null) {
     return h;
   } else {
@@ -138,10 +141,10 @@ final Map<String, InvokeHelper> _knownTypes = {
 };
 
 final Map<String, Function> _knownTypes2 = {
-  typeString<int>(): (o, b) => _toDartType<int>(o, b),
-  typeString<double>(): (o, b) => _toDartType<double>(o, b),
-  typeString<bool>(): (o, b) => _toDartType<bool>(o, b),
-  typeString<void>(): (o, b) => _toDartType<void>(o, b),
+  typeString<int>(): (Object o, Memory b) => _toDartType<int>(o, b),
+  typeString<double>(): (Object o, Memory b) => _toDartType<double>(o, b),
+  typeString<bool>(): (Object o, Memory b) => _toDartType<bool>(o, b),
+  typeString<void>(): (Object o, Memory b) => _toDartType<void>(o, b),
 };
 
 void _registerNativeMarshallerType<T extends NativeType>() {
@@ -149,9 +152,9 @@ void _registerNativeMarshallerType<T extends NativeType>() {
   _knownTypes[typeString<Pointer<Pointer<T>>>()] =
       InvokeHelper<Pointer<Pointer<T>>>(null, null);
   _knownTypes2[typeString<Pointer<T>>()] =
-      (o, b) => _toDartType<Pointer<T>>(o, b);
+      (Object o, Memory b) => _toDartType<Pointer<T>>(o, b);
   _knownTypes2[typeString<Pointer<Pointer<T>>>()] =
-      (o, b) => _toDartType<Pointer<Pointer<T>>>(o, b);
+      (Object o, Memory b) => _toDartType<Pointer<Pointer<T>>>(o, b);
 }
 
 void _registerNativeMarshallerOpaque<T extends Opaque>() {
@@ -159,9 +162,9 @@ void _registerNativeMarshallerOpaque<T extends Opaque>() {
   _knownTypes[typeString<Pointer<Pointer<T>>>()] =
       OpaqueInvokeHelperSquare<T>(null, null);
   _knownTypes2[typeString<Pointer<T>>()] =
-      (o, b) => _toDartType<Pointer<Opaque>>(o, b).cast<T>();
-  _knownTypes2[typeString<Pointer<Pointer<T>>>()] =
-      (o, b) => _toDartType<Pointer<Pointer<Opaque>>>(o, b).cast<Pointer<T>>();
+      (Object o, Memory b) => _toDartType<Pointer<Opaque>>(o, b).cast<T>();
+  _knownTypes2[typeString<Pointer<Pointer<T>>>()] = (Object o, Memory b) =>
+      _toDartType<Pointer<Pointer<Opaque>>>(o, b).cast<Pointer<T>>();
 }
 
 Function marshaller(String typeName) => _knownTypes2[typeName]!;

@@ -41,8 +41,8 @@ HTMLScriptElement _createScriptTagFromSrc(String src) => HTMLScriptElement()
   ..innerText = src;
 
 Future<void> _importJsLibraries(List<String> libraries) {
-  List<Future<void>> loading = <Future<void>>[];
-  Element head = _htmlHead();
+  final List<Future<void>> loading = <Future<void>>[];
+  final Element head = _htmlHead();
   for (String library in libraries) {
     if (!isImported(library)) {
       final scriptTag = _createScriptTagFromUrl(library);
@@ -54,8 +54,8 @@ Future<void> _importJsLibraries(List<String> libraries) {
 }
 
 Future<void> _injectJsSource(List<String> src) {
-  List<Future<void>> loading = <Future<void>>[];
-  Element head = _htmlHead();
+  final List<Future<void>> loading = <Future<void>>[];
+  final Element head = _htmlHead();
   for (String script in src) {
     final scriptTag = _createScriptTagFromSrc(script);
     head.appendChild(scriptTag);
@@ -65,7 +65,7 @@ Future<void> _injectJsSource(List<String> src) {
 }
 
 Element _htmlHead() {
-  Element? head = document.querySelector('head');
+  final Element? head = document.querySelector('head');
   if (head != null) {
     return head;
   } else {
@@ -78,7 +78,7 @@ bool _isLoaded(Element head, String url) {
     url = url.replaceFirst('./', '');
   }
   for (int i = 0; i < head.children.length; i++) {
-    Element? element = head.children.item(i);
+    final Element? element = head.children.item(i);
     if (element != null) {
       final src = element.getProperty('src'.toJS);
       if (src is JSString && src.toDart.endsWith(url)) {

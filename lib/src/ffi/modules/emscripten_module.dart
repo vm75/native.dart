@@ -26,7 +26,7 @@ extension type EmscriptenModuleJs._(JSObject _) implements JSObject {
   external factory EmscriptenModuleJs({JSUint8Array? wasmBinary});
 }
 
-const String _github = r'https://github.com/vm75/wasm_ffi';
+const String _github = 'https://github.com/vm75/wasm_ffi';
 String _adu(WasmSymbol? original, WasmSymbol? tried) =>
     'CRITICAL EXCEPTION! Address double use! This should never happen, please report this issue on github immediately at $_github'
     '\r\nOriginal: $original'
@@ -38,11 +38,11 @@ typedef _Free = void Function(int address);
 FunctionDescription _fromWasmFunction(String name, JSFunction func) {
   final funcDesc = func as WrappedJSFunction;
 
-  String? funcName = funcDesc.name?.toDart;
+  final String? funcName = funcDesc.name?.toDart;
   if (funcName != null) {
-    int? index = int.tryParse(funcName);
+    final int? index = int.tryParse(funcName);
     if (index != null) {
-      int? argCount = funcDesc.length?.toDartInt;
+      final int? argCount = funcDesc.length?.toDartInt;
       if (argCount != null) {
         return FunctionDescription(
             tableIndex: index,
@@ -66,7 +66,8 @@ typedef EmscriptenModuleFunc = JSPromise<JSObject?> Function();
 @extra
 class EmscriptenModule extends Module {
   static EmscriptenModuleFunc _getModuleFunction(String moduleName) {
-    JSFunction? moduleFunction = globalContext.getProperty(moduleName.toJS);
+    final JSFunction? moduleFunction =
+        globalContext.getProperty(moduleName.toJS);
     if (moduleFunction == null) {
       throw StateError('Could not find a emscripten module named $moduleName');
     }
@@ -75,8 +76,7 @@ class EmscriptenModule extends Module {
 
   /// Documentation is in `emscripten_module_stub.dart`!
   static Future<EmscriptenModule> compile(String moduleName,
-      {Uint8List? wasmBinary,
-      void Function(EmscriptenModuleJs)? preinit}) async {
+      {void Function(EmscriptenModuleJs)? preinit}) async {
     final moduleFunction = _getModuleFunction(moduleName);
 
     final module = await moduleFunction().toDart;
@@ -106,18 +106,21 @@ class EmscriptenModule extends Module {
   factory EmscriptenModule._fromJs(EmscriptenModuleJs module) {
     final asm = module.wasmExports ?? module.asm;
     if (asm != null) {
-      Map<int, WasmSymbol> knownAddresses = {};
+      final Map<int, WasmSymbol> knownAddresses = {};
       _Malloc? malloc;
       _Free? free;
-      List<WasmSymbol> exports = [];
-      List entries = WrappedJSObject.entries(asm).toDart;
+      final List<WasmSymbol> exports = [];
+      final List entries = WrappedJSObject.entries(asm).toDart;
       WasmTable? indirectFunctionTable;
       // if (entries is List<Object>) {
       for (dynamic entry in entries) {
         if (entry is! List) {
           throw StateError("Unexpected entry in entries(Module['asm'])!");
         }
-        Object value = entry.last;
+        final Object? value = entry.last;
+        if (value == null) {
+          throw StateError('Error: Unexpected null value in for entry $entry');
+        }
         // TODO: Not sure if `value` can ever be `int` directly. I only
         // observed it being WebAssembly.Global for globals.
         if (value is int ||
@@ -125,7 +128,8 @@ class EmscriptenModule extends Module {
                 value.value is int)) {
           final int address =
               (value is int) ? value : ((value as WasmGlobal).value as int);
-          Global g = Global(address: address, name: entry.first as String);
+          final Global g =
+              Global(address: address, name: entry.first as String);
           if (knownAddresses.containsKey(address) &&
               knownAddresses[address] is! Global) {
             throw StateError(_adu(knownAddresses[address], g));
@@ -133,7 +137,7 @@ class EmscriptenModule extends Module {
           knownAddresses[address] = g;
           exports.add(g);
         } else if (value is Function) {
-          FunctionDescription description =
+          final FunctionDescription description =
               _fromWasmFunction(entry.first as String, value as JSFunction);
           // It might happen that there are two different c functions that do nothing else than calling the same underlying c function
           // In this case, a compiler might substitute both functions with the underlying c function
@@ -173,7 +177,7 @@ class EmscriptenModule extends Module {
     } else {
       _Malloc? malloc;
       _Free? free;
-      List<WasmSymbol> exports = [];
+      final List<WasmSymbol> exports = [];
       WasmTable? indirectFunctionTable;
       final entries = WrappedJSObject.entries(module).toDart;
       for (final jsEntry in entries) {
@@ -225,7 +229,7 @@ class EmscriptenModule extends Module {
   @override
   ByteBuffer get heap => _getHeap();
   ByteBuffer _getHeap() {
-    Uint8List? h = _emscriptenModuleJs.HEAPU8?.toDart;
+    final Uint8List? h = _emscriptenModuleJs.HEAPU8?.toDart;
     if (h != null) {
       return h.buffer;
     } else {
@@ -245,7 +249,7 @@ class EmscriptenModule extends Module {
   /// the return type and parameters of `T` match the wasm function.
   @override
   Pointer<T> lookup<T extends NativeType>(String name, Memory memory) {
-    WasmSymbol symbol = symbolByName(memory, name);
+    final WasmSymbol symbol = symbolByName(memory, name);
     if (isNativeFunctionType<T>()) {
       if (symbol is FunctionDescription) {
         return Pointer<T>.fromAddress(symbol.tableIndex, memory);

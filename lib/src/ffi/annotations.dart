@@ -60,5 +60,5 @@ class DartRepresentationOf {
   /// [NativeFunction]<T1 Function(T2, T3) -> S1 Function(S2, S3)
   ///    where DartRepresentationOf(Tn) -> Sn
   /// T extends Struct                  -> T
-  const DartRepresentationOf(String nativeType);
+  const DartRepresentationOf();
 }

@@ -49,7 +49,7 @@ class StandaloneWasmModule extends Module {
   void free(int pointer) {
     final func = _instance.functions['free'];
     if (func is Function) {
-      (func as Function).call(pointer);
+      (func! as Function).call(pointer);
     }
   }
 
@@ -64,7 +64,7 @@ class StandaloneWasmModule extends Module {
   int malloc(int size) {
     final func = _instance.functions['malloc'];
     if (func is Function) {
-      final resp = (func as Function).call(size) as int;
+      final resp = (func! as Function).call(size) as int;
       return resp;
     }
     return -1;
@@ -79,7 +79,7 @@ class StandaloneWasmModule extends Module {
   /// the return type and parameters of `T` match the wasm function.
   @override
   Pointer<T> lookup<T extends NativeType>(String name, Memory memory) {
-    WasmSymbol symbol = symbolByName(memory, name);
+    final WasmSymbol symbol = symbolByName(memory, name);
     if (isNativeFunctionType<T>()) {
       if (symbol is FunctionDescription) {
         return Pointer<T>.fromAddress(symbol.tableIndex, memory);

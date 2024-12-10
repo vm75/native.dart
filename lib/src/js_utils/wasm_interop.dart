@@ -198,17 +198,21 @@ class Instance {
 
   Instance._(this.nativeModule, this.nativeInstance) {
     for (final rawKey in WrappedJSObject.keys(nativeInstance.exports).toDart) {
-      final key = (rawKey as JSString).toDart;
+      final key = (rawKey! as JSString).toDart;
       final value = nativeInstance.exports.getProperty(rawKey);
 
+      if (value == null) {
+        // TODO throw StateError('Could not find an export named $key');
+        continue;
+      }
       if (value is Function) {
-        functions[key] = value as JSFunction;
+        functions[key] = (value as JSFunction);
       } else if (WasmGlobal.isInstance(value)) {
-        globals[key] = value as WasmGlobal;
+        globals[key] = (value as WasmGlobal);
       } else if (WasmMemory.isInstance(value)) {
-        memories[key] = value as WasmMemory;
+        memories[key] = (value as WasmMemory);
       } else if (WasmTable.isInstance(value)) {
-        tables[key] = value as WasmTable;
+        tables[key] = (value as WasmTable);
       }
     }
   }
@@ -239,7 +243,7 @@ class Instance {
     // C constructors and set up memory.
     final exports = native.instance.exports;
     if (exports.has('_initialize')) {
-      (exports['_initialize'] as JSFunction).callAsFunction();
+      (exports['_initialize']! as JSFunction).callAsFunction();
     }
 
     return Instance._(native.module, native.instance);
@@ -270,7 +274,7 @@ class Instance {
     // C constructors and set up memory.
     final exports = native.instance.exports;
     if (exports.has('_initialize')) {
-      (exports['_initialize'] as JSFunction).callAsFunction();
+      (exports['_initialize']! as JSFunction).callAsFunction();
     }
 
     return Instance._(native.module, native.instance);
