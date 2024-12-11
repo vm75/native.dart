@@ -1,0 +1,48 @@
+name: Publish Dart Packages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'wasm_ffi/CHANGELOG.md'
+      - 'universal_ffi/CHANGELOG.md'
+
+jobs:
+  analyze-and-publish:
+    name: Analyze and Publish Dart Packages
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package:
+          - wasm_ffi
+          - universal_ffi
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v2
+        with:
+          channel: stable
+
+      - name: Analyze ${matrix.package}
+        run: |
+          cd ${matrix.package}
+          dart pub get
+          dart analyze
+          dart test
+
+      - name: Publish ${matrix.package} (if valid)
+        env:
+          PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
+        run: |
+          cd ${matrix.package}
+          # Validate the package
+          dart pub publish --dry-run
+
+          # Publish the package if validation succeeds
+          echo "Publishing ${matrix.package} to pub.dev..."
+          # dart pub publish --force
