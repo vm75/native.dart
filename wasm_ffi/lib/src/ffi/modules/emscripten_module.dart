@@ -26,7 +26,7 @@ extension type EmscriptenModuleJs._(JSObject _) implements JSObject {
   external factory EmscriptenModuleJs({JSUint8Array? wasmBinary});
 }
 
-const String _github = 'https://github.com/vm75/wasm_ffi';
+const String _github = 'https://github.com/vm75/native.ffi';
 String _adu(WasmSymbol? original, WasmSymbol? tried) =>
     'CRITICAL EXCEPTION! Address double use! This should never happen, please report this issue on github immediately at $_github'
     '\r\nOriginal: $original'

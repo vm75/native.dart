@@ -1,7 +1,7 @@
 name: universal_ffi
 description: A drop-in replacement for dart:ffi for all platforms.
 version: 1.0.0
-repository: https://github.com/vm75/native.ffi/universal_ffi/
+repository: https://github.com/vm75/native.ffi/tree/main/universal_ffi
 
 environment:
   sdk: ^3.5.1

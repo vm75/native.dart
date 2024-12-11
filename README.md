@@ -15,7 +15,7 @@ It has the two Dart modules.
 
 # Wasm Ffi
 
-[![Repo]](https://github.com/vm75/wasm_ffi/wasm_ffi)
+[![Repo]](https://github.com/vm75/native.ffi/tree/main/wasm_ffi)
 ![Pub Version](https://img.shields.io/pub/v/wasm_ffi)
 ![Pub Points](https://img.shields.io/pub/points/wasm_ffi)
 ![Pub Popularity](https://img.shields.io/pub/popularity/wasm_ffi)
@@ -26,7 +26,7 @@ It has the two Dart modules.
 
 # Universal Ffi
 
-[![Repo]](https://github.com/vm75/wasm_ffi/universal_ffi)
+[![Repo]](https://github.com/vm75/native.ffi/tree/main/universal_ffi)
 ![Pub Version](https://img.shields.io/pub/v/wasm_ffi)
 ![Pub Points](https://img.shields.io/pub/points/universal_ffi)
 ![Pub Popularity](https://img.shields.io/pub/popularity/universal_ffi)
@@ -36,9 +36,9 @@ It has the two Dart modules.
 
 **Native Ffi** provides a simple way to use the same native(C/C++) code across multiple platforms. Contributions are welcome! 🚀
 
-[license_url]: https://github.com/vm75/wasm_ffi/blob/main/LICENSE
-[build_url]: https://github.com/vm75/wasm_ffi/actions
+[license_url]: https://github.com/vm75/native.ffi/blob/main/LICENSE
+[build_url]: https://github.com/vm75/native.ffi/actions
 
 [License]: https://img.shields.io/badge/license-MIT-blue.svg
-[Build]: https://img.shields.io/github/actions/workflow/status/vm75/wasm_ffi/.github/workflows/publish.yml?branch=main
+[Build]: https://img.shields.io/github/actions/workflow/status/vm75/native.ffi/.github/workflows/publish.yml?branch=main
 [Repo]: https://img.shields.io/badge/Repo-gray?style=flat&logo=Github
