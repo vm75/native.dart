@@ -1,5 +1,5 @@
 ## [1.0.5]
-* Renamed some options
+* Renamed some options. defaulting to wasm with js
 
 ## [1.0.4]
 * Fixing documentation issues
