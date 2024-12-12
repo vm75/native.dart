@@ -1,3 +1,6 @@
+## [1.0.5]
+* Renamed some options
+
 ## [1.0.4]
 * Fixing documentation issues
 

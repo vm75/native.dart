@@ -30,7 +30,7 @@ AppType get appType {
 ///
 /// [modulePath] is the path to the shared library module.
 /// [options] optional load options.
-///   * isPlugin: indicates whether the module is a plugin.
+///   * isFfiPlugin: this is a Ffi plugin.
 String resolveModulePath(String modulePath, Set<String> options) {
   if (modulePath.isEmpty) {
     return '';
@@ -38,7 +38,7 @@ String resolveModulePath(String modulePath, Set<String> options) {
 
   final moduleName = path.basenameWithoutExtension(modulePath);
   final moduleDir = path.dirname(modulePath);
-  final isPlugin = options.contains('isPlugin');
+  final isFfiPlugin = options.contains('isFfiPlugin');
 
   late String fileName;
   if (Platform.isWindows) {
@@ -46,11 +46,12 @@ String resolveModulePath(String modulePath, Set<String> options) {
   } else if (Platform.isLinux || Platform.isAndroid) {
     fileName = 'lib$moduleName.so';
   } else if (Platform.isMacOS || Platform.isIOS) {
-    fileName =
-        isPlugin ? '$moduleName.framework/$moduleName' : 'lib$moduleName.dylib';
+    fileName = isFfiPlugin
+        ? '$moduleName.framework/$moduleName'
+        : 'lib$moduleName.dylib';
   } else {
     throw UnsupportedError('Unsupported platform');
   }
 
-  return isPlugin ? fileName : path.join(moduleDir, fileName);
+  return isFfiPlugin ? fileName : path.join(moduleDir, fileName);
 }

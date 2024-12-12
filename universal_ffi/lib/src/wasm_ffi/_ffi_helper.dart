@@ -14,19 +14,19 @@ AppType get appType {
 ///
 /// [modulePath] is the path to the shared library module.
 /// [options] optional load options.
-///   * isPlugin: indicates whether the module is a plugin.
-///   * wasmNeedsJs: indicates whether the wasm needs js to run.
+///   * isFfiPlugin: indicates whether the module is a plugin.
+///   * isStandaloneWasm: indicates whether the wasm is standalone.
 String resolveModulePath(String modulePath, Set<String> options) {
   var ext = path.extension(modulePath);
-  final isPlugin = options.contains('isPlugin');
-  final wasmNeedsJs = options.contains('wasmNeedsJs');
+  final isFfiPlugin = options.contains('isFfiPlugin');
+  final isStandaloneWasm = options.contains('isStandaloneWasm');
   if (ext == '') {
-    ext = wasmNeedsJs ? '.js' : '.wasm';
+    ext = isStandaloneWasm ? '.wasm' : '.js';
     modulePath = '$modulePath$ext';
   }
   final moduleName = path.basenameWithoutExtension(modulePath);
 
-  if (isPlugin) {
+  if (isFfiPlugin) {
     return 'assets/packages/$moduleName/assets/$moduleName$ext';
   }
 

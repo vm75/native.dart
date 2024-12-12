@@ -48,10 +48,11 @@ class FfiHelper {
   ///
   /// [modulePath]: The path to the module to be loaded.
   /// [options]: Optional load options, all defaulting to false.
-  ///   * isStaticallyLinked: indicates whether the module is statically linked.
-  ///   * isPlugin: indicates whether the module is a plugin.
-  ///   * wasmNeedsJs: indicates whether the wasm needs js to run.
+  ///   * isStaticallyLinked: non-web modules are statically linked.
+  ///   * isFfiPlugin: this is a Ffi plugin.
+  ///   * isStandaloneWasm: indicates whether the wasm is standalone.
   /// [overrides]: [AppType] specific overrides to the path to the module to be loaded.
+  ///   * Empty override indicates that the module is statically linked.
   ///
   /// Returns a [Future] that completes with an [FfiHelper] instance.
   /// Throws an [ArgumentError] if the module cannot be found.
