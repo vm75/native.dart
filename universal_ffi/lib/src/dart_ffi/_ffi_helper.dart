@@ -30,7 +30,7 @@ AppType get appType {
 ///
 /// [modulePath] is the path to the shared library module.
 /// [options] optional load options.
-///   * isFfiPlugin: this is a Ffi plugin.
+///   * is-ffi-plugin: this is a Ffi plugin.
 String resolveModulePath(String modulePath, Set<String> options) {
   if (modulePath.isEmpty) {
     return '';
@@ -38,7 +38,7 @@ String resolveModulePath(String modulePath, Set<String> options) {
 
   final moduleName = path.basenameWithoutExtension(modulePath);
   final moduleDir = path.dirname(modulePath);
-  final isFfiPlugin = options.contains('isFfiPlugin');
+  final isFfiPlugin = options.contains('is-ffi-plugin');
 
   late String fileName;
   if (Platform.isWindows) {

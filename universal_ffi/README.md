@@ -55,19 +55,19 @@ FfiHelper.load resolves the modulePath to the platform specific path in a variet
 #### Simple usage
 In the case, it is assumed that all platforms load a shared library from the same relative path.
 For example, if the modulePath = 'path/name', then the following paths are used:
-- Web: 'path/name.js' or 'path/name.wasm' (if isStandaloneWasm option is specified)
+- Web: 'path/name.js' or 'path/name.wasm' (if `is-standalone-wasm` option is specified)
 - Linux & Android: 'path/name.so'
 - Windows: 'path/name.dll'
 - macOS & iOS: 'path/name.dylib'
 
-#### Option: isStaticallyLinked
-If the modulePath = 'path/name' and isStaticallyLinked option is specified, then the following paths are used:
-- Web: 'path/name.js' or 'path/name.wasm' (if isStandaloneWasm option is specified)
+#### Option: is-statically-linked
+If the modulePath = 'path/name' and `is-statically-linked` option is specified, then the following paths are used:
+- Web: 'path/name.js' or 'path/name.wasm' (if `is-standalone-wasm` option is specified)
 - All other platforms: Instead of loading a shared library, calls DynamicLibrary.process().
 
-#### Option: isFfiPlugin (used for Flutter Ffi Plugin)
-If the modulePath = 'path/name' and isFfiPlugin option is specified, then 'path' is ignored and the following paths are used:
-- Web: 'path/name.js' or 'path/name.wasm' (if isStandaloneWasm option is specified)option is specified)
+#### Option: is-ffi-plugin (used for Flutter Ffi Plugin)
+If the modulePath = 'path/name' and `is-ffi-plugin` option is specified, then 'path' is ignored and the following paths are used:
+- Web: 'path/name.js' or 'path/name.wasm' (if `is-standalone-wasm` option is specified)option is specified)
 - Linux & Android: 'name.so'
 - Windows: 'name.dll'
 - macOS & iOS: 'name.framework/name'
