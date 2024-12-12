@@ -21,9 +21,6 @@ It has the two Dart modules.
 ![Pub Popularity](https://img.shields.io/pub/popularity/wasm_ffi)
 ![Pub Likes](https://img.shields.io/pub/likes/wasm_ffi)
 
-
-
-
 # Universal Ffi
 
 [![Repo]](https://github.com/vm75/native.ffi/tree/main/universal_ffi)

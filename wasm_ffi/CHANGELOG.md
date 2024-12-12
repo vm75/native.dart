@@ -1,3 +1,6 @@
+## [2.0.1]
+* Fixed some urls
+
 ## [2.0.0]
 * Removed ffi dependency into universal_ffi, making it pure wasm_ffi
 
