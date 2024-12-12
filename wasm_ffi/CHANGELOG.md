@@ -1,3 +1,6 @@
+## [2.0.2]
+* Updated readme
+
 ## [2.0.1]
 * Fixed some urls
 

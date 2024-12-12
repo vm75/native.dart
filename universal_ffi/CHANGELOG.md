@@ -1,4 +1,7 @@
-## [1.0.0]
+## [1.0.2]
+* Updated readme
+
+## [1.0.1]
 * Fixed some urls
 
 ## [1.0.0]

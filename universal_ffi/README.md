@@ -22,7 +22,7 @@ or
 flutter pub add universal_ffi
 ```
 
-### ffigen
+### Generate binding files
 Generates bindings using [`package:ffigen`](https://pub.dev/packages/ffigen).
 Replace `import 'dart:ffi' as ffi;` with `import 'package:universal_ffi/ffi.dart' as ffi;` in the generated binding files.
 
@@ -46,13 +46,13 @@ import 'native_example_bindings.dart';
 
 ## Features
 
-### DynamicLibrary.openAsync
+### DynamicLibrary.openAsync()
 DynamicLibrary.open is synchronous for 'dart:ffi', but asynchronous for 'wasm_ffi'. This helper method uses both asynchronously.
 
-### FfiHelper.load
+### FfiHelper.load()
 FfiHelper.load resolves the modulePath to the platform specific path in a variety of ways.
 
-#### basic case
+#### Simple usage
 In the case, it is assumed that all platforms load a shared library from the same relative path.
 For example, if the modulePath = 'path/name', then the following paths are used:
 - Web: 'path/name.wasm' or 'path/name.js' (if wasmNeedsJs option is specified)
@@ -60,19 +60,19 @@ For example, if the modulePath = 'path/name', then the following paths are used:
 - Windows: 'path/name.dll'
 - macOS & iOS: 'path/name.dylib'
 
-#### isStaticallyLinked
+#### Option: isStaticallyLinked
 If the modulePath = 'path/name' and isStaticallyLinked option is specified, then the following paths are used:
 - Web: 'path/name.wasm' or 'path/name.js' (if wasmNeedsJs option is specified)
 - All other platforms: Instead of loading a shared library, calls DynamicLibrary.process().
 
-#### isPlugin (used for Flutter Ffi Plugin)
+#### Option: isPlugin (used for Flutter Ffi Plugin)
 If the modulePath = 'path/name' and isPlugin option is specified, then 'path' is ignored and the following paths are used:
 - Web: 'assets/packages/name/assets/name.wasm' or 'assets/packages/name/assets/name.js' (if wasmNeedsJs option is specified)
 - Linux & Android: 'name.so'
 - Windows: 'name.dll'
 - macOS & iOS: 'name.framework/name'
 
-#### overrides
+#### Overrides
 Overrides can be used to specify the path to the module to be loaded for specific [AppType].
 Override strings are used as is.
 
@@ -82,8 +82,8 @@ So unless the memory is explicitly specified, the memory from the first loaded m
 One option is to explicitly use library.memory for wasm & malloc/calloc for ffi.
 Alternatively, you can use FfiHelper.safeUsing or FfiHelper.safeWithZoneArena:
 
-#### FfiHelper.safeUsing
+#### FfiHelper.safeUsing()
 `FfiHelper.safeUsing` is a wrapper for `using`. It ensures that the library-specific memory is used.
 
-#### FfiHelper.safeWithZoneArena
+#### FfiHelper.safeWithZoneArena()
 `FfiHelper.safeWithZoneArena` is a wrapper for `withZoneArena`. It ensures that the library-specific memory is used.
