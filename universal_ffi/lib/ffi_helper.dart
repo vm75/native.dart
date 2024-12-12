@@ -2,11 +2,11 @@ library universal_ffi;
 
 import 'ffi.dart';
 import 'ffi_utils.dart';
-import 'src/_wasm_ffi/ffi_helper.dart'
-    if (dart.library.ffi) 'src/_dart_ffi/ffi_helper.dart';
+import 'src/wasm_ffi/_ffi_helper.dart'
+    if (dart.library.ffi) 'src/dart_ffi/_ffi_helper.dart';
 
-export 'src/_wasm_ffi/ffi_helper.dart'
-    if (dart.library.ffi) 'src/_dart_ffi/ffi_helper.dart' show appType;
+export 'src/wasm_ffi/_ffi_helper.dart'
+    if (dart.library.ffi) 'src/dart_ffi/_ffi_helper.dart' show appType;
 
 enum AppType { android, ios, linux, macos, windows, web, unknown }
 

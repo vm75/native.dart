@@ -11,3 +11,5 @@ pubspec.lock
 *.a
 *.out
 **/.cxx/
+
+pubspec_overrides.yaml

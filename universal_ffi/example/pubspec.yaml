@@ -11,10 +11,6 @@ dependencies:
   universal_ffi:
     path: ../
 
-dependency_overrides:
-  wasm_ffi:
-    path: ../../wasm_ffi/
-
 dev_dependencies:
   build_runner: ^2.4.8
   build_web_compilers: ^4.0.9

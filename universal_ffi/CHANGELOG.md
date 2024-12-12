@@ -1,3 +1,6 @@
+## [1.0.3]
+* Fix pub validation errors
+
 ## [1.0.2]
 * Updated readme
 
