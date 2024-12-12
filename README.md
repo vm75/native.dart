@@ -8,10 +8,7 @@
 
 </div>
 
-# Native Ffi
-
-Native Ffi contains Dart utilities to easily incorporate native(C/C++) code into your Dart/Flutter project.
-It has the two Dart modules.
+This repo contains Dart plugins to easily incorporate native(C/C++) code into Dart/Flutter projects.
 
 # Wasm Ffi
 
@@ -21,6 +18,8 @@ It has the two Dart modules.
 ![Pub Popularity](https://img.shields.io/pub/popularity/wasm_ffi)
 ![Pub Likes](https://img.shields.io/pub/likes/wasm_ffi)
 
+`wasm_ffi` is a drop-in replacement for `dart:ffi` for the web platform using WebAssembly. This enables the same native code to be used across all platforms.
+
 # Universal Ffi
 
 [![Repo]](https://github.com/vm75/native.ffi/tree/main/universal_ffi)
@@ -28,6 +27,9 @@ It has the two Dart modules.
 ![Pub Points](https://img.shields.io/pub/points/universal_ffi)
 ![Pub Popularity](https://img.shields.io/pub/popularity/universal_ffi)
 ![Pub Likes](https://img.shields.io/pub/likes/universal_ffi)
+
+`universal_ffi` is a wrapper on top of `wasm_ffi` and `dart:ffi` to provide a consistent API across all platforms.
+It also has some helper methods to make it easier to use.
 
 ---
 
