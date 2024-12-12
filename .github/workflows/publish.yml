@@ -28,21 +28,30 @@ jobs:
         with:
           channel: stable
 
-      - name: Analyze ${matrix.package}
+      - name: Check if relevant CHANGELOG is updated
+        id: changes
         run: |
-          cd ${matrix.package}
+          if [[ ! $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep "^${{ matrix.package }}/CHANGELOG.md$") ]]; then
+            echo "skip=true" >> $GITHUB_ENV
+          fi
+
+      - name: Analyze ${{ matrix.package }}
+        if: env.skip != 'true'
+        run: |
+          cd ${{ matrix.package }}
           dart pub get
           dart analyze
           dart test
 
-      - name: Publish ${matrix.package} (if valid)
+      - name: Publish ${{ matrix.package }} (if valid)
+        if: env.skip != 'true'
         env:
           PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
         run: |
-          cd ${matrix.package}
+          cd ${{ matrix.package }}
           # Validate the package
           dart pub publish --dry-run
 
           # Publish the package if validation succeeds
-          echo "Publishing ${matrix.package} to pub.dev..."
+          echo "Publishing ${{ matrix.package }} to pub.dev..."
           # dart pub publish --force
