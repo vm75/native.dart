@@ -1,9 +1,12 @@
 # wasm_ffi
 
-![Pub Version](https://img.shields.io/pub/v/wasm_ffi)
-![Pub Points](https://img.shields.io/pub/points/wasm_ffi)
-![Pub Popularity](https://img.shields.io/pub/popularity/wasm_ffi)
-![Pub Likes](https://img.shields.io/pub/likes/wasm_ffi)
+[![License]](LICENSE)
+[![Build]][build_url]
+[![Repo]](https://github.com/vm75/native.ffi/tree/main/wasm_ffi)
+[![Pub Version](https://img.shields.io/pub/v/wasm_ffi)](https://pub.dev/packages/wasm_ffi)
+[![Pub Points](https://img.shields.io/pub/points/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
+[![Pub Popularity](https://img.shields.io/pub/popularity/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
+[![Pub Likes](https://img.shields.io/pub/likes/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
 
 `wasm_ffi` intends to be a drop-in replacement for `dart:ffi` on the web platform using wasm. wasm_ffi is built on top of [web_ffi](https://pub.dev/packages/web_ffi).
 The general idea is to expose an API that is compatible with `dart:ffi` but translates all calls through `dart:js` to a browser running `WebAssembly`.
@@ -91,3 +94,14 @@ import 'native_example_bindings.dart';
 The generated wasm file needs all exported function. To ensure that, one of the two can be done:
 * Use EMSCRIPTEN_KEEPALIVE annotation on all exported functions
 * Define EXPORTED_FUNCTIONS when compiling the wasm
+
+---
+
+**wasm_ffi** enables using native code for the web platform with ffi-like bindings. Contributions are welcome! 🚀
+
+[license_url]: https://github.com/vm75/native.ffi/blob/main/LICENSE
+[build_url]: https://github.com/vm75/native.ffi/actions
+
+[License]: https://img.shields.io/badge/license-MIT-blue.svg
+[Build]: https://img.shields.io/github/actions/workflow/status/vm75/native.ffi/.github/workflows/publish.yml?branch=main
+[Repo]: https://img.shields.io/badge/github-gray?style=flat&logo=Github
