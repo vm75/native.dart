@@ -1,4 +1,5 @@
-library universal_ffi;
+/// Useful helpers for working with Foreign Function Interface (FFI).
+library universal_ffi_helper;
 
 import 'ffi.dart';
 import 'ffi_utils.dart';

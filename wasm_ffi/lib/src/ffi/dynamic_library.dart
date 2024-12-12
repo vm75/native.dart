@@ -85,12 +85,6 @@ class DynamicLibrary {
   /// needed for the [EmscriptenModule] to find the correct module. It is
   /// ignored for the [StandaloneWasmModule].
   ///
-  /// The [wasmBinary] parameter is the binary content of the wasm file. To keep
-  /// pure-dart compatibility, loading from asset is not implemented.
-  ///
-  /// The [jsModule] parameter is only used for the [EmscriptenModule] to
-  /// inject the js code into the webpage. It is ignored for the  [StandaloneWasmModule].
-  ///
   /// The [useAsGlobal] parameter can be used to control if the
   /// newly created [Memory] object should be registered as [Memory.global].
   /// Loads a library file and provides access to its symbols.

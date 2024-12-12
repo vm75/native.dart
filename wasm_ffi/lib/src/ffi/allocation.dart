@@ -1,3 +1,4 @@
+import 'annotations.dart';
 import 'types.dart';
 
 /// Manages memory on the native heap.

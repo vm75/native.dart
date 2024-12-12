@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'annotations.dart';
+import 'exceptions.dart';
 import 'marshaller.dart';
 import 'memory.dart';
 import 'modules/module.dart';
@@ -12,7 +13,7 @@ extension NativeFunctionPointer<NF extends Function>
   ///
   /// There are several rules that apply for the return type of `DF`, see
   /// the list of [allowed return types](https://github.com/vm75/native.ffi/blob/main/wasm_ffi/return_types.md).
-  /// If marshalling failes, a [MarshallingException] is thrown.
+  /// If marshalling fails, a [MarshallingException] is thrown.
   ///
   /// If this is called on a pointer that does not point to a function,
   /// a [ArgumentError](https://api.dart.dev/stable/dart-core/ArgumentError-class.html) is thrown.

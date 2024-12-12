@@ -1,3 +1,6 @@
+## [2.0.3]
+* Fixing documentation issues
+
 ## [2.0.2]
 * Updated readme
 
