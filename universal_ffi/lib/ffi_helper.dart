@@ -9,8 +9,29 @@ import 'src/wasm_ffi/_ffi_helper.dart'
 export 'src/wasm_ffi/_ffi_helper.dart'
     if (dart.library.ffi) 'src/dart_ffi/_ffi_helper.dart' show appType;
 
-enum AppType { android, ios, linux, macos, windows, web, unknown }
+/// The type of the current app.
+///
+/// The type is determined by the platform.
+///
+/// Values:
+/// - [android]: Android.
+/// - [ios]: iOS.
+/// - [linux]: Linux.
+/// - [macos]: macOS.
+/// - [windows]: Windows.
+/// - [web]: Web.
+/// - [unknown]: Unknown.
+enum AppType {
+  android,
+  ios,
+  linux,
+  macos,
+  windows,
+  web,
+  unknown,
+}
 
+/// Extension on [DynamicLibrary] with asynchronous methods.
 extension AsyncDynamicLibrary on DynamicLibrary {
   /// Asynchronously opens a dynamic library from the specified [path].
   /// The ffi:DynamicLibrary.open is synchronous, but wasm_ffi:DynamicLibrary.open is asynchronous.
@@ -26,6 +47,8 @@ extension AsyncDynamicLibrary on DynamicLibrary {
   }
 }
 
+/// A helper class that encapsulates a [DynamicLibrary] and provides a convenient
+/// API for using the library.
 class FfiHelper {
   final DynamicLibrary _library;
 
