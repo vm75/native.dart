@@ -1,5 +1,5 @@
 name: universal_ffi
-description: A drop-in replacement for dart:ffi for all platforms.
+description: A drop-in replacement for dart:ffi for all platforms including web (using wasm_ffi).
 version: 1.0.2
 repository: https://github.com/vm75/native.ffi/tree/main/universal_ffi
 
