@@ -1,5 +1,5 @@
 ## [1.0.6]
-Changed options to hyphenated
+* Changed options to hyphenated
 
 ## [1.0.5]
 * Renamed some options. defaulting to wasm with js

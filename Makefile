@@ -1,7 +1,7 @@
 .PHONY: update-version build run
 
 update-version:
-	./tools/update-version.sh
+	bash ./tools/update-version.sh
 
 test:
 	cd wasm_ffi && make test
