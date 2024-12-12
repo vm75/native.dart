@@ -70,7 +70,7 @@ If the modulePath = 'path/name' and `is-statically-linked` option is specified, 
 
 #### Option: is-ffi-plugin (used for Flutter Ffi Plugin)
 If the modulePath = 'path/name' and `is-ffi-plugin` option is specified, then 'path' is ignored and the following paths are used:
-- Web: 'path/name.js' or 'path/name.wasm' (if `is-standalone-wasm` option is specified)option is specified)
+- Web: 'assets/package/name/assets/name.js' or 'assets/package/name/assets/name.wasm' (if `is-standalone-wasm` option is specified)
 - Linux & Android: 'name.so'
 - Windows: 'name.dll'
 - macOS & iOS: 'name.framework/name'
