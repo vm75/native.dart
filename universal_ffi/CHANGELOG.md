@@ -1,3 +1,6 @@
+## [1.1.0]
+* Changed load options to enum
+
 ## [1.0.8]
 * Fix missing allocator for non-web
 

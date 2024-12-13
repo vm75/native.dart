@@ -46,6 +46,7 @@ publish() {
   read -p "Do you want to publish ${name}? (y/n): " publish
 
   if [[ ${publish} == "y" ]]; then
+    git add *
     cd ${name}
     dart pub get
     dart pub publish

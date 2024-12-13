@@ -13,7 +13,7 @@ Future<bool> init() async {
   try {
     _ffiHelper = await FfiHelper.load(
       'example_ffi_plugin',
-      options: {'is-ffi-plugin'},
+      options: {LoadOption.isFfiPlugin},
     );
 
     _bindings = ExampleFfiPluginBindings(_ffiHelper.library);

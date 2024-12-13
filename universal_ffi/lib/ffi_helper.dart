@@ -31,6 +31,12 @@ enum AppType {
   unknown,
 }
 
+enum LoadOption {
+  isStaticallyLinked,
+  isFfiPlugin,
+  isStandaloneWasm,
+}
+
 /// Extension on [DynamicLibrary] with asynchronous methods.
 extension AsyncDynamicLibrary on DynamicLibrary {
   /// Asynchronously opens a dynamic library from the specified [path].
@@ -75,9 +81,9 @@ class FfiHelper {
   ///
   /// [modulePath]: The path to the module to be loaded.
   /// [options]: Optional load options, all defaulting to false.
-  ///   * is-statically-linked: non-web modules are statically linked.
-  ///   * is-ffi-plugin: this is a Ffi plugin.
-  ///   * is-standalone-wasm: indicates whether the wasm is standalone.
+  ///   * isStaticallyLinked: non-web modules are statically linked.
+  ///   * isFfiPlugin: this is a Ffi plugin.
+  ///   * isStandaloneWasm: indicates whether the wasm is standalone.
   /// [overrides]: [AppType] specific overrides to the path to the module to be loaded.
   ///   * Empty override indicates that the module is statically linked.
   ///
@@ -85,14 +91,14 @@ class FfiHelper {
   /// Throws an [ArgumentError] if the module cannot be found.
   static Future<FfiHelper> load(
     String modulePath, {
-    Set<String> options = const {},
+    Set<LoadOption> options = const {},
     Map<AppType, String> overrides = const {},
   }) async {
     modulePath = overrides[appType] ?? resolveModulePath(modulePath, options);
 
     // If module path is empty, it is treated as a statically linked library
     // This is not supported for Web/Wasm
-    if (modulePath.isEmpty || options.contains('is-statically-linked')) {
+    if (modulePath.isEmpty || options.contains(LoadOption.isStaticallyLinked)) {
       if (appType == AppType.web) {
         throw ArgumentError(
           'Statically linked library is not supported for Web/Wasm',

@@ -1,5 +1,5 @@
 import 'package:path/path.dart' as path;
-import '../../ffi_helper.dart' show AppType;
+import '../../ffi_helper.dart' show AppType, LoadOption;
 
 /// Returns the type of the current app.
 ///
@@ -14,12 +14,12 @@ AppType get appType {
 ///
 /// [modulePath] is the path to the shared library module.
 /// [options] optional load options.
-///   * is-ffi-plugin: indicates whether the module is a plugin.
-///   * is-standalone-wasm: indicates whether the wasm is standalone.
-String resolveModulePath(String modulePath, Set<String> options) {
+///   * isSfiPlugin: indicates whether the module is a plugin.
+///   * isStandaloneWasm: indicates whether the wasm is standalone.
+String resolveModulePath(String modulePath, Set<LoadOption> options) {
   var ext = path.extension(modulePath);
-  final isFfiPlugin = options.contains('is-ffi-plugin');
-  final isStandaloneWasm = options.contains('is-standalone-wasm');
+  final isFfiPlugin = options.contains(LoadOption.isFfiPlugin);
+  final isStandaloneWasm = options.contains(LoadOption.isStandaloneWasm);
   if (ext == '') {
     ext = isStandaloneWasm ? '.wasm' : '.js';
     modulePath = '$modulePath$ext';

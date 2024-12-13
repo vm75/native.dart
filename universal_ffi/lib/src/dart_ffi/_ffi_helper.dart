@@ -1,6 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:path/path.dart' as path;
-import '../../ffi_helper.dart' show AppType;
+import '../../ffi_helper.dart' show AppType, LoadOption;
 
 /// Returns the type of the current app.
 ///
@@ -30,15 +30,15 @@ AppType get appType {
 ///
 /// [modulePath] is the path to the shared library module.
 /// [options] optional load options.
-///   * is-ffi-plugin: this is a Ffi plugin.
-String resolveModulePath(String modulePath, Set<String> options) {
+///   * isFfiPlugin: this is a Ffi plugin.
+String resolveModulePath(String modulePath, Set<LoadOption> options) {
   if (modulePath.isEmpty) {
     return '';
   }
 
   final moduleName = path.basenameWithoutExtension(modulePath);
   final moduleDir = path.dirname(modulePath);
-  final isFfiPlugin = options.contains('is-ffi-plugin');
+  final isFfiPlugin = options.contains(LoadOption.isFfiPlugin);
 
   late String fileName;
   if (Platform.isWindows) {
