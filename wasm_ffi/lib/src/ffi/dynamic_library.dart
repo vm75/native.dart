@@ -5,6 +5,7 @@ import '../ffi_utils/utf16.dart';
 import '../ffi_utils/utf8.dart';
 import '../js_utils/inject_js.dart';
 import '../js_utils/wasm_interop.dart' as interop;
+import 'allocation.dart';
 import 'annotations.dart';
 import 'marshaller.dart';
 import 'memory.dart';
@@ -66,8 +67,15 @@ class DynamicLibrary {
   @extra
   Module get module => _module;
 
-  /// Access the memory bound to this library
+  /// Default allocator for this library
   @extra
+  Allocator get allocator => _memory;
+
+  /// Allocator for this library
+  /// @deprecated
+  /// Use [allocator]
+  @extra
+  @Deprecated('Use allocator instead')
   Memory get memory => _memory;
 
   DynamicLibrary._(this._module, this._memory);

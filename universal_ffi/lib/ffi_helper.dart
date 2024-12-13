@@ -54,6 +54,10 @@ class FfiHelper {
 
   FfiHelper._(this._library);
 
+  /// Default allocator for this library
+  Allocator get allocator => _library.allocator;
+
+  /// The underlying [DynamicLibrary] instance.
   DynamicLibrary get library => _library;
 
   /// Loads a dynamic library from the specified [modulePath] and returns
@@ -113,7 +117,7 @@ class FfiHelper {
   ///
   /// Returns the result of the [computation].
   R safeUsing<R>(R Function(Arena) computation, [Allocator? allocator]) {
-    return using(computation, allocator ?? _library.memory);
+    return using(computation, allocator ?? _library.allocator);
   }
 
   /// Safely runs the provided [computation] function within a zoned [Arena],
@@ -127,6 +131,6 @@ class FfiHelper {
   ///
   /// Returns the result of the [computation].
   R safeWithZoneArena<R>(R Function() computation, [Allocator? allocator]) {
-    return withZoneArena(computation, allocator ?? _library.memory);
+    return withZoneArena(computation, allocator ?? _library.allocator);
   }
 }

@@ -22,12 +22,15 @@ Future<Result> testWasmFfi(String libName, String name) async {
   final library = await DynamicLibrary.open(libName);
   final bindings = NativeExampleBindings(library);
 
-  return using((Arena arena) {
-    final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
-    final helloStr = bindings.hello(cString).cast<Utf8>().toDartString();
-    final sizeOfInt = bindings.intSize();
-    final sizeOfBool = bindings.boolSize();
-    final sizeOfPointer = bindings.pointerSize();
-    return Result(helloStr, sizeOfInt, sizeOfBool, sizeOfPointer);
-  }, library.memory); // library.memory is optional if only one module is loaded
+  return using(
+    (Arena arena) {
+      final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
+      final helloStr = bindings.hello(cString).cast<Utf8>().toDartString();
+      final sizeOfInt = bindings.intSize();
+      final sizeOfBool = bindings.boolSize();
+      final sizeOfPointer = bindings.pointerSize();
+      return Result(helloStr, sizeOfInt, sizeOfBool, sizeOfPointer);
+    },
+    library.allocator,
+  ); // library.allocator is optional if only one module is loaded
 }

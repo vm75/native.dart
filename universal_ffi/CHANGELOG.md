@@ -1,3 +1,6 @@
+## [1.0.7]
+* Deprecating DynamicLibrary.memory in favour of DynamicLibrary.allocator
+
 ## [1.0.6]
 * Changed options to hyphenated
 

@@ -43,7 +43,7 @@ import 'native_example_bindings.dart';
   // use bindings
   using((Arena arena) {
     ...
-  }, ffiHelper.library.memory);
+  }, ffiHelper.library.allocator);
 ...
 ```
 
@@ -82,7 +82,7 @@ Override strings are used as is.
 #### Multiple wasm_ffi modules in the same project
 If you have multiple wasm_ffi modules in the same project, the global memory will refer only to the first loaded module.
 So unless the memory is explicitly specified, the memory from the first loaded module will be used for all modules, causing unexpected behavior.
-One option is to explicitly use library.memory for wasm & malloc/calloc for ffi.
+One option is to explicitly use library.allocator for wasm & malloc/calloc for ffi.
 Alternatively, you can use FfiHelper.safeUsing or FfiHelper.safeWithZoneArena:
 
 #### FfiHelper.safeUsing()

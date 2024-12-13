@@ -1,3 +1,6 @@
+## [2.0.4]
+* Deprecating DynamicLibrary.memory in favour of DynamicLibrary.allocator
+
 ## [2.0.3]
 * Fixing documentation issues
 

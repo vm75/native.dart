@@ -18,7 +18,7 @@ To simplify the usage, [universal_ffi](https://pub.dev/packages/universal_ffi) i
 While `wasm_ffi` tries to mimic the `dart:ffi` API as close as possible, there are some differences. The list below documents the most importent ones, make sure to read it. For more insight, take a look at the API documentation.
 
 * The [`DynamicLibrary`](https://pub.dev/documentation/wasm_ffi/latest/wasm_ffi/DynamicLibrary-class.html) `open` method is asynchronous. It also accepts some additional optional parameters.
-* If more than one library is loaded, the memory will continue to refer to the first library. **This breaks calls to later loaded libraries!** One workaround is to specify the correct library.memory for each usage of `using`.
+* If more than one library is loaded, the memory will continue to refer to the first library. **This breaks calls to later loaded libraries!** One workaround is to specify the correct library.allocator for each usage of `using`.
 * Each library has its own memory, so objects cannot be shared between libraries.
 * Some advanced types are still unsupported.
 * There are some classes and functions that are present in `wasm_ffi` but not in `dart:ffi`; such things are annotated with [`@extra`](https://pub.dev/documentation/wasm_ffi/latest/wasm_ffi_meta/extra-constant.html).
@@ -84,7 +84,7 @@ import 'native_example_bindings.dart';
   using((Arena arena) {
     final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
     return bindings.hello(cString).cast<Utf8>().toDartString();
-  }, library.memory); // library.memory is optional if only one module is loaded
+  }, library.allocator); // library.allocator is optional if only one module is loaded
 ...
 
 ```
