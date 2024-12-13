@@ -4,4 +4,6 @@ export 'dart:ffi';
 
 extension LibraryExtensions on DynamicLibrary {
   Allocator get memory => calloc;
+
+  Allocator get allocator => calloc;
 }

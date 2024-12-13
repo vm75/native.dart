@@ -1,3 +1,6 @@
+## [1.0.8]
+* Fix missing allocator for non-web
+
 ## [1.0.7]
 * Deprecating DynamicLibrary.memory in favour of DynamicLibrary.allocator
 

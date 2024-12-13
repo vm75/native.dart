@@ -9,6 +9,13 @@
       "cwd": "wasm_ffi/example",
     },
     {
+      "name": "wasm_ffi: flutter example",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "cwd": "wasm_ffi/example_flutter",
+    },
+    {
       "name": "universal_ffi: web example",
       "type": "dart",
       "request": "launch",
@@ -21,6 +28,13 @@
       "request": "launch",
       "program": "bin/example.dart",
       "cwd": "universal_ffi/example",
+    },
+    {
+      "name": "universal_ffi: flutter example",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "cwd": "universal_ffi/example_flutter",
     },
     {
       "name": "bump version",
