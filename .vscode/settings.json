@@ -33,4 +33,7 @@
   "dart.debugSdkLibraries": true,
   "dart.debugExternalPackageLibraries": true,
   "dart.devToolsBrowser": "default",
+  "files.associations": {
+    "example_ffi_plugin.h": "c"
+  },
 }

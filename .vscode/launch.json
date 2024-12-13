@@ -30,11 +30,11 @@
       "cwd": "universal_ffi/example",
     },
     {
-      "name": "universal_ffi: flutter example",
+      "name": "universal_ffi: ffi-plugin example",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "cwd": "universal_ffi/example_flutter",
+      "cwd": "universal_ffi/example_ffi_plugin/example",
     },
     {
       "name": "bump version",
