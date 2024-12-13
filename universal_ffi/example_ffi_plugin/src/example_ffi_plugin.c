@@ -20,19 +20,19 @@ EXPORT void freeMemory(char* buffer)
 }
 
 /// size of an int
-EXPORT int intSize()
+EXPORT int intSize(void)
 {
   return (int)sizeof(int);
 }
 
 /// size of a bool
-EXPORT int boolSize()
+EXPORT int boolSize(void)
 {
   return (int)sizeof(_Bool);
 }
 
 /// size of a pointer
-EXPORT int pointerSize()
+EXPORT int pointerSize(void)
 {
   return (int)sizeof(void*);
 }
