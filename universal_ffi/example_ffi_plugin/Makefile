@@ -17,10 +17,10 @@ else
 endif
 COMPILED_EXPORTS="EXPORTED_FUNCTIONS=[\"_malloc\", \"_free\"]"
 
-lib/native_example_bindings.dart: $(DEPS)
+lib/example_ffi_plugin_bindings_generated.dart: $(DEPS)
 	dart run ffigen --config ffigen.yaml && sed -i "s#'dart:ffi'#'package:universal_ffi/ffi.dart'#g" $@
 
-assets/example_ffi_plugin.js: $(DEPS) lib/native_example_bindings.dart
+assets/example_ffi_plugin.js: $(DEPS) lib/example_ffi_plugin_bindings_generated.dart
 	emcc -o assets/example_ffi_plugin.js $(COMPILER_OPTIONS) $(LINKER_OPTIONS) \
 		$(SRC) \
 		-s MODULARIZE=1 -s 'EXPORT_NAME="example_ffi_plugin"' -s ALLOW_MEMORY_GROWTH=1 \
