@@ -5,17 +5,17 @@
 import 'package:universal_ffi/ffi.dart' as ffi;
 
 /// Bindings for Native Example.
-class ExampleFfiPluginBindings {
+class NativeExampleBindings {
   /// Holds the symbol lookup function.
   final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
       _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  ExampleFfiPluginBindings(ffi.DynamicLibrary dynamicLibrary)
+  NativeExampleBindings(ffi.DynamicLibrary dynamicLibrary)
       : _lookup = dynamicLibrary.lookup;
 
   /// The symbols are looked up with [lookup].
-  ExampleFfiPluginBindings.fromLookup(
+  NativeExampleBindings.fromLookup(
       ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
           lookup)
       : _lookup = lookup;

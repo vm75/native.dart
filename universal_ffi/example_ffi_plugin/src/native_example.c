@@ -1,4 +1,4 @@
-#include "example_ffi_plugin.h"
+#include "native_example.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

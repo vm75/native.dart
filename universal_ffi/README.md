@@ -61,7 +61,7 @@ For example, if the modulePath = 'path/name', then the following paths are used:
 - Web: 'path/name.js' or 'path/name.wasm' (if `isStandaloneWasm` option is specified)
 - Linux & Android: 'path/name.so'
 - Windows: 'path/name.dll'
-- macOS & iOS: 'path/name.dylib'
+- macOS & iOS: 'path/libname.dylib'
 
 #### Option: isStaticallyLinked
 If the modulePath = 'path/name' and `isStaticallyLinked` option is specified, then the following paths are used:

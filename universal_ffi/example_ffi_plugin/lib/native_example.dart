@@ -4,10 +4,10 @@ import 'package:universal_ffi/ffi.dart';
 import 'package:universal_ffi/ffi_helper.dart';
 import 'package:universal_ffi/ffi_utils.dart';
 
-import 'example_ffi_plugin_bindings_generated.dart';
+import 'native_example_bindings.dart';
 
 late final FfiHelper _ffiHelper;
-late final ExampleFfiPluginBindings _bindings;
+late final NativeExampleBindings _bindings;
 
 Future<bool> init() async {
   try {
@@ -16,7 +16,7 @@ Future<bool> init() async {
       options: {LoadOption.isFfiPlugin},
     );
 
-    _bindings = ExampleFfiPluginBindings(_ffiHelper.library);
+    _bindings = NativeExampleBindings(_ffiHelper.library);
   } catch (e) {
     return false;
   }

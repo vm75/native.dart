@@ -1,15 +1,15 @@
 # Run with `dart run ffigen --config ffigen.yaml`.
-name: ExampleFfiPluginBindings
+name: NativeExampleBindings
 description: |
-  Bindings for `src/example_ffi_plugin.h`.
+  Bindings for `src/native_example.h`.
 
   Regenerate bindings with `dart run ffigen --config ffigen.yaml`.
-output: 'lib/example_ffi_plugin_bindings_generated.dart'
+output: 'lib/native_example_bindings.dart'
 headers:
   entry-points:
-    - 'src/example_ffi_plugin.h'
+    - 'src/native_example.h'
   include-directives:
-    - 'src/example_ffi_plugin.h'
+    - 'src/native_example.h'
 preamble: |
   // ignore_for_file: always_specify_types
   // ignore_for_file: camel_case_types

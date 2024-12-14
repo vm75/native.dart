@@ -3,15 +3,20 @@
 # the plugin to fail to compile for some customers of the plugin.
 cmake_minimum_required(VERSION 3.10)
 
-project(example_ffi_plugin_library VERSION 0.0.1 LANGUAGES C)
+project(native_example_library VERSION 0.0.1 LANGUAGES C)
 
-add_library(example_ffi_plugin SHARED
-  "example_ffi_plugin.c"
+add_library(native_example SHARED
+  "native_example.c"
 )
 
-set_target_properties(example_ffi_plugin PROPERTIES
-  PUBLIC_HEADER example_ffi_plugin.h
-  OUTPUT_NAME "example_ffi_plugin"
+set_target_properties(native_example PROPERTIES
+  PUBLIC_HEADER native_example.h
+  OUTPUT_NAME "native_example"
 )
 
-target_compile_definitions(example_ffi_plugin PUBLIC DART_SHARED_LIB)
+target_compile_definitions(native_example PUBLIC DART_SHARED_LIB)
+
+if (ANDROID)
+  # Support Android 15 16k page size
+  target_link_options(native_example PRIVATE "-Wl,-z,max-page-size=16384")
+endif()

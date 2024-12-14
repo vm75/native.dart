@@ -20,5 +20,12 @@ dev_dependencies:
   lints: ^4.0.0
   test: ^1.25.12
 
+topics:
+ - ffi
+ - wasm
+ - native
+ - web
+ - web_ffi
+
 platforms:
   web:

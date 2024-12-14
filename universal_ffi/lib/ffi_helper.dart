@@ -70,14 +70,14 @@ class FfiHelper {
   /// an [FfiHelper] instance encapsulating the library.
   ///
   /// Given [modulePath] as `<path>/<name>`, depending on the platform, it looks for
-  /// `<name>.wasm`, `<name>.js`, `<name>.so`, `<name>.dll`, `<name>.dylib`
+  /// `<name>.wasm`, `<name>.js`, `lib<name>.so`, `<name>.dll`, `lib<name>.dylib`
   /// in the same relative folder `<path>`.
   ///
   /// If `<name>.wasm` is used, it assumes Standalone wasm for web and
-  /// `<name>.so`, `<name>.dll`, `<name>.dylib` for other platforms.
+  /// `lib<name>.so`, `<name>.dll`, `lib<name>.dylib` for other platforms.
   ///
   /// If `<name>.js` is used, it assumes Emscripten wasm for web and
-  /// `<name>.so`, `<name>.dll`, `<name>.dylib` for other platforms.
+  /// `lib<name>.so`, `<name>.dll`, `lib<name>.dylib` for other platforms.
   ///
   /// [modulePath]: The path to the module to be loaded.
   /// [options]: Optional load options, all defaulting to false.

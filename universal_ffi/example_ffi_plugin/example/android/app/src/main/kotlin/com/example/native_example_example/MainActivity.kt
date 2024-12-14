@@ -1,4 +1,4 @@
-package com.example.example_ffi_plugin_example
+package com.example.native_example_example
 
 import io.flutter.embedding.android.FlutterActivity
 

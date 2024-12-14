@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:example_ffi_plugin/example_ffi_plugin.dart';
+import 'package:native_example/native_example.dart';
 
 void main() {
   runApp(const MyApp());
