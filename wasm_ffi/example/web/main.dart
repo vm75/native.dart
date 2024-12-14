@@ -1,24 +1,47 @@
 import 'package:example/example.dart';
 import 'package:web/web.dart';
 
-void setValue(String id, String value) {
-  (document.querySelector('#$id')! as HTMLElement).text = value;
+Element createKeyVal(String key, String value) {
+  final div = document.createElement('p');
+  final label = document.createElement('strong');
+  label.text = '$key: ';
+  div.append(label);
+  final span = document.createElement('span');
+  span.text = value;
+  div.append(span);
+  return div;
+}
+
+Future<Element> runTests(String source, String name) async {
+  final container = document.createElement('div');
+  final header = document.createElement('h2');
+  header.text = 'Test WasmFfi ($name)';
+  container.append(header);
+  final runner = await Example.create('assets/$source');
+  container.append(createKeyVal('Library Name', runner.getLibraryName()));
+  container.append(createKeyVal('Hello String', runner.hello(name)));
+  container.append(createKeyVal('Size of Int', runner.intSize().toString()));
+  container.append(createKeyVal('Size of Bool', runner.boolSize().toString()));
+  container
+      .append(createKeyVal('Size of Pointer', runner.pointerSize().toString()));
+  return container;
 }
 
 void main() {
-  testWasmFfi('assets/standalone/native_example.wasm', 'Standalone')
-      .then((result) => {
-            setValue('wasm-hello-str', result.helloStr),
-            setValue('wasm-size-of-int', result.sizeOfInt.toString()),
-            setValue('wasm-size-of-bool', result.sizeOfBool.toString()),
-            setValue('wasm-size-of-pointer', result.sizeOfPointer.toString())
-          });
+  final app = (document.querySelector('body')! as HTMLElement);
 
-  testWasmFfi('assets/emscripten/native_example.js', 'Emscripten')
-      .then((result) => {
-            setValue('js-hello-str', result.helloStr),
-            setValue('js-size-of-int', result.sizeOfInt.toString()),
-            setValue('js-size-of-bool', result.sizeOfBool.toString()),
-            setValue('js-size-of-pointer', result.sizeOfPointer.toString())
-          });
+  final container = document.createElement('div');
+  final header = document.createElement('h2');
+  header.text = 'wasm-ffi tests';
+  container.append(header);
+
+  app.append(container);
+
+  runTests('standalone/native_example.wasm', 'Standalone').then((result) {
+    container.append(result);
+  });
+
+  runTests('emscripten/native_example.js', 'Emscripten').then((result) {
+    container.append(result);
+  });
 }

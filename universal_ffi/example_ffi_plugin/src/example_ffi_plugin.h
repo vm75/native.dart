@@ -11,6 +11,9 @@
 #define EXPORT __attribute__((visibility("default"))) __attribute__((used))
 #endif
 
+/// library name
+EXPORT const char* getLibraryName(void);
+
 /// hello world
 EXPORT char* hello(const char* text);
 

@@ -9,75 +9,101 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'UniversalFfi Example',
+      title: 'Wasm FFI Example',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const ResultWidget(),
+      home: const HomePage(),
     );
   }
 }
 
-class ResultWidget extends StatefulWidget {
-  const ResultWidget({super.key});
-
-  @override
-  State<ResultWidget> createState() => _ResultWidgetState();
-}
-
-class _ResultWidgetState extends State<ResultWidget> {
-  Future<bool>? _futureResult;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureResult = init();
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Universal FFI Result'),
+        title: const Text('universal_ffi tests'),
       ),
-      body: Center(
-        child: FutureBuilder<bool>(
-          future: _futureResult,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else if (snapshot.hasData && snapshot.data == true) {
-              return Column(
-                children: [
-                  Text(
-                    'Hello result: ${hello("plugin")}',
+      body: const Column(
+        children: [
+          Expanded(
+            child: AsyncRunnerWidget(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AsyncRunnerWidget extends StatefulWidget {
+  const AsyncRunnerWidget({super.key});
+
+  @override
+  State<AsyncRunnerWidget> createState() => _AsyncRunnerWidgetState();
+}
+
+class _AsyncRunnerWidgetState extends State<AsyncRunnerWidget> {
+  final Map<String, String> _data = {};
+
+  // Simulated asynchronous runner.
+  Future<Map<String, String>> fetchValues() async {
+    await init();
+    return {
+      'Library Name': getLibraryName(),
+      'Hello String': hello('universal_ffi'),
+      'Size of Int': sizeOfInt().toString(),
+      'Size of Bool': sizeOfBool().toString(),
+      'Size of Pointer': sizeOfPointer().toString(),
+    };
+  }
+
+  // Load data using the asynchronous runner
+  Future<void> _loadData() async {
+    final values = await fetchValues();
+    setState(() {
+      _data.clear();
+      _data.addAll(values);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData(); // Automatically fetch data on initialization
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(10),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Test universal-ffi',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
+              if (_data.isEmpty)
+                const Center(child: CircularProgressIndicator())
+              else
+                ..._data.entries.map(
+                  (entry) => Text(
+                    '${entry.key}: ${entry.value}',
                     style: const TextStyle(fontSize: 16),
                   ),
-                  Text(
-                    'Size of Int: ${sizeOfInt()}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    'Size of Bool: ${sizeOfBool()}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  Text(
-                    'Size of Pointer: ${sizeOfPointer()}',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              );
-            } else {
-              return const Text('No result available');
-            }
-          },
+                ),
+            ],
+          ),
         ),
       ),
     );

@@ -11,6 +11,9 @@
 #define EXPORT __attribute__((visibility("default"))) __attribute__((used))
 #endif
 
+/// library name
+EXPORT const char* getLibraryName(void);
+
 /// hello world
 EXPORT char* hello(const char* text);
 
@@ -18,12 +21,12 @@ EXPORT char* hello(const char* text);
 EXPORT void freeMemory(char* buffer);
 
 /// size of an int
-EXPORT int intSize();
+EXPORT int intSize(void);
 
 /// size of a bool
-EXPORT int boolSize();
+EXPORT int boolSize(void);
 
 /// size of a pointer
-EXPORT int pointerSize();
+EXPORT int pointerSize(void);
 
 #endif

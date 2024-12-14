@@ -24,6 +24,9 @@ Future<bool> init() async {
   return true;
 }
 
+String getLibraryName() =>
+    _bindings.getLibraryName().cast<Utf8>().toDartString();
+
 String hello(String name) {
   return _ffiHelper.safeUsing((Arena arena) {
     final cString = name.toNativeUtf8(allocator: arena).cast<Char>();

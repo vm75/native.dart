@@ -6,12 +6,11 @@ void printValue(String id, String value) {
 }
 
 void main(List<String> arguments) {
-  testWasmFfi('assets/native_example', 'Ffi').then(
-    (result) => {
-      printValue('wasm-hello-str', result.helloStr),
-      printValue('wasm-size-of-int', result.sizeOfInt.toString()),
-      printValue('wasm-size-of-bool', result.sizeOfBool.toString()),
-      printValue('wasm-size-of-pointer', result.sizeOfPointer.toString()),
-    },
-  );
+  Example.create('assets/native_example').then((runner) {
+    printValue('Library Name', runner.getLibraryName());
+    printValue('Hello String', runner.hello('universal_ffi'));
+    printValue('Size of Int', runner.intSize().toString());
+    printValue('Size of Bool', runner.boolSize().toString());
+    printValue('Size of Pointer', runner.pointerSize().toString());
+  });
 }

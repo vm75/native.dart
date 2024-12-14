@@ -20,6 +20,17 @@ class ExampleFfiPluginBindings {
           lookup)
       : _lookup = lookup;
 
+  /// library name
+  ffi.Pointer<ffi.Char> getLibraryName() {
+    return _getLibraryName();
+  }
+
+  late final _getLibraryNamePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Char> Function()>>(
+          'getLibraryName');
+  late final _getLibraryName =
+      _getLibraryNamePtr.asFunction<ffi.Pointer<ffi.Char> Function()>();
+
   /// hello world
   ffi.Pointer<ffi.Char> hello(
     ffi.Pointer<ffi.Char> text,

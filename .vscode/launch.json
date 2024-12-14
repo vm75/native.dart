@@ -36,17 +36,5 @@
       "program": "lib/main.dart",
       "cwd": "universal_ffi/example_ffi_plugin/example",
     },
-    {
-      "name": "bump version",
-      "type": "dart",
-      "request": "launch",
-      "program": "tool/bump_version.dart",
-      "cwd": "${workspaceFolder}",
-      "args": [
-        "patch",
-        "log",
-        "test",
-      ]
-    },
   ]
 }

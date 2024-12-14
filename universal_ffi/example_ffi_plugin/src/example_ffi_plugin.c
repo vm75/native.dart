@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+/// library name
+EXPORT const char* getLibraryName(void)
+{
+  return "native_example";
+}
+
 /// hello world
 EXPORT char* hello(const char* text)
 {

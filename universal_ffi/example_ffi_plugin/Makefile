@@ -1,5 +1,3 @@
-.PHONY: clean
-
 default: build
 
 build: assets/example_ffi_plugin.js

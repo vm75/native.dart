@@ -3,31 +3,30 @@ import 'package:universal_ffi/ffi_helper.dart';
 import 'package:universal_ffi/ffi_utils.dart';
 import 'native_example_bindings.dart';
 
-class Result {
-  final String helloStr;
-  int sizeOfInt;
-  int sizeOfBool;
-  int sizeOfPointer;
+class Example {
+  final FfiHelper helper;
+  final NativeExampleBindings bindings;
 
-  Result(this.helloStr, this.sizeOfInt, this.sizeOfBool, this.sizeOfPointer);
+  Example._(this.helper) : bindings = NativeExampleBindings(helper.library);
 
-  @override
-  String toString() {
-    return 'hello: $helloStr, int: $sizeOfInt, bool: $sizeOfBool, pointer: $sizeOfPointer';
+  static Future<Example> create(String libPath) async {
+    final helper = await FfiHelper.load(libPath);
+    return Example._(helper);
   }
-}
 
-Future<Result> testWasmFfi(String libName, String name) async {
-  final FfiHelper ffiHelper = await FfiHelper.load(libName);
+  String getLibraryName() =>
+      bindings.getLibraryName().cast<Utf8>().toDartString();
 
-  final bindings = NativeExampleBindings(ffiHelper.library);
+  String hello(String name) {
+    return helper.safeUsing((Arena arena) {
+      final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
+      return bindings.hello(cString).cast<Utf8>().toDartString();
+    });
+  }
 
-  return ffiHelper.safeUsing((Arena arena) {
-    final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
-    final helloStr = bindings.hello(cString).cast<Utf8>().toDartString();
-    final sizeOfInt = bindings.intSize();
-    final sizeOfBool = bindings.boolSize();
-    final sizeOfPointer = bindings.pointerSize();
-    return Result(helloStr, sizeOfInt, sizeOfBool, sizeOfPointer);
-  });
+  int intSize() => bindings.intSize();
+
+  int boolSize() => bindings.boolSize();
+
+  int pointerSize() => bindings.pointerSize();
 }

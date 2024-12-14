@@ -9,66 +9,109 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'WasmFfi Example',
+      title: 'Wasm FFI Example',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const ResultWidget(
-        libName: 'assets/emscripten/native_example.js',
-        name: 'emscripten',
-      ),
+      home: const HomePage(),
     );
   }
 }
 
-class ResultWidget extends StatefulWidget {
-  final String libName;
-  final String name;
-
-  const ResultWidget({super.key, required this.libName, required this.name});
-
-  @override
-  State<ResultWidget> createState() => _ResultWidgetState();
-}
-
-class _ResultWidgetState extends State<ResultWidget> {
-  Future<Result>? _futureResult;
-
-  @override
-  void initState() {
-    super.initState();
-    _futureResult = testWasmFfi(widget.libName, widget.name);
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WASM FFI Result'),
+        title: const Text('wasm-ffi tests'),
       ),
-      body: Center(
-        child: FutureBuilder<Result>(
-          future: _futureResult,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              final result = snapshot.data!;
-              return Text(
-                result.toString(),
-                style: const TextStyle(fontSize: 16),
-              );
-            } else {
-              return const Text('No result available');
-            }
-          },
+      body: const Column(
+        children: [
+          Expanded(
+            child: AsyncRunnerWidget(
+              'standalone/native_example.wasm',
+              'Standalone',
+            ),
+          ),
+          Divider(),
+          Expanded(
+            child: AsyncRunnerWidget(
+              'emscripten/native_example.js',
+              'Emscripten',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AsyncRunnerWidget extends StatefulWidget {
+  final String wasmPath;
+  final String name;
+  const AsyncRunnerWidget(this.wasmPath, this.name, {super.key});
+
+  @override
+  State<AsyncRunnerWidget> createState() => _AsyncRunnerWidgetState();
+}
+
+class _AsyncRunnerWidgetState extends State<AsyncRunnerWidget> {
+  final Map<String, String> _data = {};
+
+  // Simulated asynchronous runner.
+  Future<Map<String, String>> fetchValues() async {
+    final runner = await Example.create('assets/${widget.wasmPath}');
+    return {
+      'Library Name': runner.getLibraryName(),
+      'Hello String': runner.hello(widget.name),
+      'Size of Int': runner.intSize().toString(),
+      'Size of Bool': runner.boolSize().toString(),
+      'Size of Pointer': runner.pointerSize().toString(),
+    };
+  }
+
+  // Load data using the asynchronous runner
+  Future<void> _loadData() async {
+    final values = await fetchValues();
+    setState(() {
+      _data.clear();
+      _data.addAll(values);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData(); // Automatically fetch data on initialization
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(10),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Test WasmFfi (${widget.name})',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            if (_data.isEmpty)
+              const Center(child: CircularProgressIndicator())
+            else
+              ..._data.entries.map((entry) => Text(
+                    '${entry.key}: ${entry.value}',
+                    style: const TextStyle(fontSize: 16),
+                  )),
+          ],
         ),
       ),
     );
