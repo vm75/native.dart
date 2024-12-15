@@ -1,3 +1,6 @@
+## [1.1.1]
+* Adding topics for pub.dev
+
 ## [1.1.0]
 * Changed load options to enum
 

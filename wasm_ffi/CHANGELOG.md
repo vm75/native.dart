@@ -1,3 +1,6 @@
+## [2.0.5]
+* Adding topics for pub.dev
+
 ## [2.0.4]
 * Deprecating DynamicLibrary.memory in favour of DynamicLibrary.allocator
 
