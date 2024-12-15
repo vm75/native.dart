@@ -12,7 +12,7 @@ late final NativeExampleBindings _bindings;
 Future<bool> init() async {
   try {
     _ffiHelper = await FfiHelper.load(
-      'example_ffi_plugin',
+      'native_example',
       options: {LoadOption.isFfiPlugin},
     );
 
@@ -28,10 +28,12 @@ String getLibraryName() =>
     _bindings.getLibraryName().cast<Utf8>().toDartString();
 
 String hello(String name) {
-  return _ffiHelper.safeUsing((Arena arena) {
-    final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
-    return _bindings.hello(cString).cast<Utf8>().toDartString();
-  });
+  return _ffiHelper.safeUsing(
+    (Arena arena) {
+      final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
+      return _bindings.hello(cString).cast<Utf8>().toDartString();
+    },
+  );
 }
 
 int sizeOfInt() {

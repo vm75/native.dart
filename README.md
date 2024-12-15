@@ -10,7 +10,7 @@
 
 This repo contains Dart plugins to easily incorporate native(C/C++) code into Dart/Flutter projects.
 
-# Wasm Ffi
+# wasm_ffi
 
 [![Repo]](https://github.com/vm75/native.ffi/tree/main/wasm_ffi)
 [![Pub Version](https://img.shields.io/pub/v/wasm_ffi)](https://pub.dev/packages/wasm_ffi)
@@ -18,9 +18,9 @@ This repo contains Dart plugins to easily incorporate native(C/C++) code into Da
 [![Pub Popularity](https://img.shields.io/pub/popularity/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
 [![Pub Likes](https://img.shields.io/pub/likes/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
 
-`wasm_ffi` is a drop-in replacement for `dart:ffi` for the web platform using WebAssembly. This enables the same native code to be used across all platforms.
+[wasm_ffi](https://github.com/vm75/native.ffi/tree/main/wasm_ffi) is a `dart:ffi` replacement for the web platform. `dart:ffi` is presently not available for the web. `wasm_ffi` enables using the same native(C/C++) code across all platforms.
 
-# Universal Ffi
+# universal_ffi
 
 [![Repo]](https://github.com/vm75/native.ffi/tree/main/universal_ffi)
 [![Pub Version](https://img.shields.io/pub/v/universal_ffi)](https://pub.dev/packages/universal_ffi)
@@ -28,12 +28,12 @@ This repo contains Dart plugins to easily incorporate native(C/C++) code into Da
 [![Pub Popularity](https://img.shields.io/pub/popularity/universal_ffi)](https://pub.dev/packages/universal_ffi/score)
 [![Pub Likes](https://img.shields.io/pub/likes/universal_ffi)](https://pub.dev/packages/universal_ffi/score)
 
-`universal_ffi` is a wrapper on top of `wasm_ffi` and `dart:ffi` to provide a consistent API across all platforms.
+[universal_ffi](https://github.com/vm75/native.ffi/tree/main/universal_ffi) is a wrapper on top of `wasm_ffi` and `dart:ffi` to provide unified way to use ffi-like bindings for all platforms using the same native code.
 It also has some helper methods to make it easier to use.
 
 ---
 
-**wasm_ffi** and **universal_ffi** provides a simple way to use the same native(C/C++) code across multiple platforms. Contributions are welcome! 🚀
+Contributions are welcome! 🚀
 
 [license_url]: https://github.com/vm75/native.ffi/blob/main/LICENSE
 [build_url]: https://github.com/vm75/native.ffi/actions

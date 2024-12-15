@@ -18,10 +18,12 @@ class Example {
       bindings.getLibraryName().cast<Utf8>().toDartString();
 
   String hello(String name) {
-    return helper.safeUsing((Arena arena) {
-      final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
-      return bindings.hello(cString).cast<Utf8>().toDartString();
-    });
+    return helper.safeUsing(
+      (Arena arena) {
+        final cString = name.toNativeUtf8(allocator: arena).cast<Char>();
+        return bindings.hello(cString).cast<Utf8>().toDartString();
+      },
+    );
   }
 
   int intSize() => bindings.intSize();

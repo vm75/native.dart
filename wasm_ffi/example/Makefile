@@ -18,8 +18,8 @@ endif
 COMPILED_EXPORTS="EXPORTED_FUNCTIONS=[\"_malloc\", \"_free\"]"
 
 clean:
-	rm -rf assets/native_example.wasm
-	rm -rf assets/emscripten/native_example.js
+	rm -rf assets/standalone/*
+	rm -rf assets/emscripten/*
 
 lib/native_example_bindings.dart: $(DEPS)
 	dart run ffigen --config ffigen.yaml && sed -i "s#'dart:ffi'#'package:wasm_ffi/ffi.dart'#g" $@
@@ -37,4 +37,4 @@ web/assets/emscripten/native_example.js: $(DEPS) lib/native_example_bindings.dar
 		-s $(COMPILED_EXPORTS)
 
 run:
-	cd ../example && webdev serve
+	webdev serve
