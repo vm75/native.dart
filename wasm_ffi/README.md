@@ -1,12 +1,12 @@
 # wasm_ffi
 
-[![License]](LICENSE)
-[![Build]][build_url]
-[![Repo]](https://github.com/vm75/native.ffi/tree/main/wasm_ffi)
-[![Pub Version](https://img.shields.io/pub/v/wasm_ffi)](https://pub.dev/packages/wasm_ffi)
-[![Pub Points](https://img.shields.io/pub/points/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
-[![Pub Popularity](https://img.shields.io/pub/popularity/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
-[![Pub Likes](https://img.shields.io/pub/likes/wasm_ffi)](https://pub.dev/packages/wasm_ffi/score)
+[![license_badge]][license_url]
+[![build_badge]][build_url]
+[![github_badge]][wasm_ffi_github_url]
+[![wasm_ffi_pub_ver]][wasm_ffi_pub_url]
+[![wasm_ffi_pub_points]][wasm_ffi_pub_score_url]
+[![wasm_ffi_pub_popularity]][wasm_ffi_pub_score_url]
+[![wasm_ffi_pub_likes]][wasm_ffi_pub_score_url]
 
 `wasm_ffi` intends to be a drop-in replacement for `dart:ffi` on the web platform using wasm. wasm_ffi is built on top of [web_ffi](https://pub.dev/packages/web_ffi).
 The general idea is to expose an API that is compatible with `dart:ffi` but translates all calls through `dart:js` to a browser running `WebAssembly`.
@@ -97,11 +97,20 @@ The generated wasm file needs all exported function. To ensure that, one of the 
 
 ---
 
-**wasm_ffi** enables using native code for the web platform with ffi-like bindings. Contributions are welcome! 🚀
+Contributions are welcome! 🚀
 
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_url]: https://github.com/vm75/native.ffi/blob/main/LICENSE
+
+[build_badge]: https://img.shields.io/github/actions/workflow/status/vm75/native.ffi/.github/workflows/publish.yml?branch=main
 [build_url]: https://github.com/vm75/native.ffi/actions
 
-[License]: https://img.shields.io/badge/license-MIT-blue.svg
-[Build]: https://img.shields.io/github/actions/workflow/status/vm75/native.ffi/.github/workflows/publish.yml?branch=main
-[Repo]: https://img.shields.io/badge/github-gray?style=flat&logo=Github
+[github_badge]: https://img.shields.io/badge/github-gray?style=flat&logo=Github
+
+[wasm_ffi_pub_ver]: https://img.shields.io/pub/v/wasm_ffi
+[wasm_ffi_pub_points]: https://img.shields.io/pub/points/wasm_ffi
+[wasm_ffi_pub_popularity]: https://img.shields.io/pub/popularity/wasm_ffi
+[wasm_ffi_pub_likes]: https://img.shields.io/pub/likes/wasm_ffi
+[wasm_ffi_github_url]: https://github.com/vm75/native.ffi/tree/main/wasm_ffi
+[wasm_ffi_pub_url]: https://pub.dev/packages/wasm_ffi
+[wasm_ffi_pub_score_url]: https://pub.dev/packages/wasm_ffi/score
