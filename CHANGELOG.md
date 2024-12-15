@@ -1,3 +1,6 @@
+## [2.0.7]
+* Remove pubspec.lock
+
 ## [2.0.6]
 * Pulling universal_ffi into a separate repo. Fixing License
 

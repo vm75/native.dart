@@ -43,7 +43,9 @@ publish() {
 
   if [[ ${publish} == "y" ]]; then
     git add *
-    dart pub get
+    flutter pub get
+    cd example && flutter pub get && cd ..
+    cd example_flutter && flutter pub get && cd ..
     flutter analyze && flutter pub publish
   fi
 }
