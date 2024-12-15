@@ -1,7 +1,7 @@
 .PHONY: version build run test
 
 version:
-	bash ./tools/update-version.sh
+	bash ./tool/update-version.sh
 
 build:
 	cp -f example/src/* example_flutter/src/
