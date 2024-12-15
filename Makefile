@@ -1,25 +1,15 @@
-.PHONY: update-version build run
+.PHONY: version build run test
 
-update-version:
+version:
 	bash ./tools/update-version.sh
 
-test:
-	cd wasm_ffi && make test
-
 build:
-	cp -f wasm_ffi/example/src/* wasm_ffi/example_flutter/src/
-	cp -f wasm_ffi/example/src/* universal_ffi/example/src/
-	cp -f wasm_ffi/example/src/* universal_ffi/example_ffi_plugin/src/
-	cd wasm_ffi/example && make build
-	cp -rf wasm_ffi/example/web/assets/* wasm_ffi/example_flutter/assets/
-	cp -rf wasm_ffi/example/web/assets/emscripten/* universal_ffi/example/web/assets/
-	cp -rf wasm_ffi/example/web/assets/emscripten/* universal_ffi/example_ffi_plugin/assets/
+	cp -f example/src/* example_flutter/src/
+	cd example && make build
+	cp -rf example/web/assets/* example_flutter/assets/
 
-run-wasm:
-	cd wasm_ffi/example && make run
+run:
+	cd example && make run
 
-run-uni-web:
-	cd universal_ffi/example && make run-wasm
-
-run-uni-ffi:
-	cd universal_ffi/example && make run-ffi
+test:
+	dart run build_runner test -- -p chrome

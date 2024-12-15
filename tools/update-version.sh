@@ -1,12 +1,10 @@
 #!/bin/bash
 
 read_changelog() {
-  name=$1
-
-  curr_version=$(awk '/^version:/{print $2; exit}' ${name}/pubspec.yaml)
+  curr_version=$(awk '/^version:/{print $2; exit}' pubspec.yaml)
 
   # Prompt for version string
-  read -p "${name} version (current version is ${curr_version}): " version
+  read -p "Next version (current version is ${curr_version}): " version
 
   # validate version string
   if [[ ! ${version} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -41,47 +39,19 @@ update_changelog() {
 }
 
 publish() {
-  name=$1
-
-  read -p "Do you want to publish ${name}? (y/n): " publish
+  read -p "Do you want to publish? (y/n): " publish
 
   if [[ ${publish} == "y" ]]; then
     git add *
-    cd ${name}
     dart pub get
-    dart pub publish
-    cd ..
+    flutter analyze && flutter pub publish
   fi
 }
 
-# Prompt the user
-echo "Which package(s) do you want to update:"
-echo "1) wasm_ffi"
-echo "2) universal_ffi"
-echo "3) both"
-
-# Read user input
-read -p "Enter your choice (1, 2, or 3): " choice
-
-if [[ ${choice} != 1 && ${choice} != 2 && ${choice} != 3 ]] ; then
-  echo "Invalid choice. Please run the script again and select 1 or 2."
-  exit 1
-fi
-
-if [[ ${choice} == 1 || ${choice} == 3 ]]; then
-  read_changelog wasm_ffi
-  update_changelog wasm_ffi/CHANGELOG.md
-  sed "s/^version: .*/version: ${version}/" -i wasm_ffi/pubspec.yaml
-  sed "s/^  wasm_ffi: \^.*/  wasm_ffi: \^${version}/" -i universal_ffi/pubspec.yaml
-  publish wasm_ffi
-fi
-
-if [[ ${choice} == 2 || ${choice} == 3 ]]; then
-  read_changelog universal_ffi
-  update_changelog universal_ffi/CHANGELOG.md
-  sed "s/^version: .*/version: ${version}/" -i universal_ffi/pubspec.yaml
-  publish universal_ffi
-fi
+read_changelog
+update_changelog CHANGELOG.md
+sed "s/^version: .*/version: ${version}/" -i pubspec.yaml
+publish
 
 # commit
 read -p "Do you want to commit the changes? (y/n): " commit

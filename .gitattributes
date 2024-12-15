@@ -1,7 +1,14 @@
-example/linux/flutter/generated_plugin_registrant.cc eol=lf
-example/linux/flutter/generated_plugin_registrant.h eol=lf
-example/linux/flutter/generated_plugins.cmake eol=lf
-example/macos/Flutter/GeneratedPluginRegistrant.swift eol=lf
-example/windows/flutter/generated_plugin_registrant.cc eol=lf
-example/windows/flutter/generated_plugin_registrant.h eol=lf
-example/windows/flutter/generated_plugins.cmake eol=lf
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.pdf binary
+*.ico binary
+*.wasm binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.jar binary
+*.zip binary

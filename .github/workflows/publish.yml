@@ -5,8 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'wasm_ffi/CHANGELOG.md'
-      - 'universal_ffi/CHANGELOG.md'
+      - 'CHANGELOG.md'
 
 jobs:
   analyze-and-publish:
@@ -17,7 +16,6 @@ jobs:
       matrix:
         package:
           - wasm_ffi
-          - universal_ffi
 
     steps:
       - name: Checkout code
@@ -38,7 +36,6 @@ jobs:
       - name: Analyze ${{ matrix.package }}
         if: env.skip != 'true'
         run: |
-          cd ${{ matrix.package }}
           dart pub get
           dart analyze
           dart test
@@ -48,7 +45,6 @@ jobs:
         env:
           PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
         run: |
-          cd ${{ matrix.package }}
           # Validate the package
           dart pub publish --dry-run
 

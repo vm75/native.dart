@@ -2,39 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "wasm_ffi: example",
+      "name": "example",
       "type": "dart",
       "request": "launch",
       "program": "web",
-      "cwd": "wasm_ffi/example",
+      "cwd": "example",
     },
     {
-      "name": "wasm_ffi: flutter example",
+      "name": "flutter example",
       "type": "dart",
       "request": "launch",
       "program": "lib/main.dart",
-      "cwd": "wasm_ffi/example_flutter",
-    },
-    {
-      "name": "universal_ffi: web example",
-      "type": "dart",
-      "request": "launch",
-      "program": "web",
-      "cwd": "universal_ffi/example",
-    },
-    {
-      "name": "universal_ffi: ffi example",
-      "type": "dart",
-      "request": "launch",
-      "program": "bin/example.dart",
-      "cwd": "universal_ffi/example",
-    },
-    {
-      "name": "universal_ffi: ffi-plugin example",
-      "type": "dart",
-      "request": "launch",
-      "program": "lib/main.dart",
-      "cwd": "universal_ffi/example_ffi_plugin/example",
+      "cwd": "example_flutter",
     },
   ]
 }
